@@ -20,7 +20,6 @@ import Adafruit_BBIO.UART as UART
 
 gpio.cleanup()
 pwm.cleanup()
-showWindow=1
 
 
 
@@ -179,7 +178,7 @@ def serialSend(arr):
 	ser.write(str(arr[i])+'!') # note: terminate with '!'
 
 def serialSendSingle(value):
-	ser.write(str(value)+'!')
+	ser.write(str(value)+',')
 
 
 # PIN DEFINES #############################################
@@ -216,11 +215,13 @@ state=0
 
 
 # OPEN CV SETUP:
+showWindow=1
+
 orange=[7,189,90,25,255,255] # orange balloon
 pink=[17,90,114,25,255,201] #pink balloon
 green=[41,31,86,91,255,252]#green baloon
 balls=[orange,pink,green] #list of all colors
-
+temp=[0,23,72,26,255,255]
 if(showWindow==1):
 	cv2.namedWindow('contours')
 cap = cv2.VideoCapture(0) #select video source
@@ -234,7 +235,7 @@ while(1):
 	# check camera, send (camera angle), receive color, <change LED's (not yet)>, repeat
 	
 	# step 1: check camera
-	camData=camHelper(balls[color])
+	camData=camHelper(temp)
 	print camData
 #	if(camData[1]<10):
 #		camData=camData[0]
