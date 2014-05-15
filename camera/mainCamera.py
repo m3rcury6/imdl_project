@@ -23,7 +23,7 @@ cv2.createTrackbar('V upper','image',0,255,nothing)
 
 # #initialize trackbar positions
 
-ini=[5,170,135,22,255,239] # orange balloon
+ini=[0,0,0,179,255,255] # orange balloon
 cv2.setTrackbarPos('H lower','image',ini[0])
 cv2.setTrackbarPos('S lower','image',ini[1])
 cv2.setTrackbarPos('V lower','image',ini[2])
