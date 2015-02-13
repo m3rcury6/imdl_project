@@ -37,6 +37,8 @@ def MRComm(velocity,kjgdir):
         print "Rstop"
 #def MRComm
 
+print "test edit for BBB"
+
 def checkforPause():
     print "testing"
 
