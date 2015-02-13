@@ -5,7 +5,7 @@ import time
 import kj
 # import Adafruit_BBIO.UART as serial
 
-print "this is currently part of master branch"
+print "test edit FROM bbb to computer"
 
 '''
 plan to get this code on track for OA:
@@ -36,8 +36,6 @@ def MRComm(velocity,kjgdir):
     else:
         print "Rstop"
 #def MRComm
-
-print "test edit for BBB"
 
 def checkforPause():
     print "testing"
