@@ -15,8 +15,7 @@ plan to get this code on track for OA:
 3. link IR to adjustment in motor comm
 '''
 
-#didn't want those parts there
-print "this is coming in from branch quickAdd"
+
 
 def MLComm(velocity,kjgdir):
     #take in direction, move motor at that speed
