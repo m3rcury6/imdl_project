@@ -14,6 +14,8 @@ plan to get this code on track for OA:
 3. link IR to adjustment in motor comm
 '''
 
+print "the struggle is real"
+
 
 
 def MLComm(velocity,kjgdir):
