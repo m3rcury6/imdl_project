@@ -5,6 +5,7 @@ import time
 import kj
 # import Adafruit_BBIO.UART as serial
 
+print "this is currently part of master branch"
 
 '''
 plan to get this code on track for OA:
@@ -14,9 +15,8 @@ plan to get this code on track for OA:
 3. link IR to adjustment in motor comm
 '''
 
-print "the struggle is real"
-print "second part"
-
+#didn't want those parts there
+print "this is coming in from branch quickAdd"
 
 def MLComm(velocity,kjgdir):
     #take in direction, move motor at that speed
