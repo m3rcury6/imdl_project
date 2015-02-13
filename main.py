@@ -15,7 +15,7 @@ plan to get this code on track for OA:
 '''
 
 print "the struggle is real"
-
+print "second part"
 
 
 def MLComm(velocity,kjgdir):
