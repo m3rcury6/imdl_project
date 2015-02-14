@@ -200,7 +200,13 @@ for i in range(1,7): #run for 5 seconds
         print "chB"
 
 # MAIN LOOP ###############################################
-    fwd(i*10)
+    print "fwd"
+    gpio.output(L1pin,0)
+    gpio.output(L2pin,1)
+    gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
+    gpio.output(R2pin,0)
+    pwm.start(LpwmPin,i*10,50)
+    pwm.start(RpwmPin,i*10,50)
 
     #read in an ADC value.
     #if button is pressed, ask for user input
