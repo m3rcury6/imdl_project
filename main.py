@@ -100,14 +100,14 @@ def printIR():
     print L,M,R
 #def printIR
 
-def fwd():
+def fwd(dutyCycle):
     print "fwd"
     gpio.output(L1pin,0)
     gpio.output(L2pin,1)
     gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
     gpio.output(R2pin,0)
-    pwm.start(LpwmPin,60,50)
-    pwm.start(RpwmPin,60,50)
+    pwm.start(LpwmPin,dutyCycle,50)
+    pwm.start(RpwmPin,dutyCycle,50)
 
 def bwd():
     print "bwd"
@@ -163,7 +163,11 @@ gpio.add_event_detect(enRBpin, gpio.RISING)
 
 gpio.setup(R1pin, 1) # setup h-bridge
 gpio.setup(R2pin, 1)
-pwm.start(RpwmPin,0,50)
+# pwm.start(RpwmPin,0,50) # this DOES NOT help prevent initial surge of 100% pwm
+gpio.setup(L1pin, 1)
+gpio.setup(L2pin, 1)
+
+
 adc.setup()
 
 sleep(1)
@@ -196,10 +200,7 @@ for i in range(1,7): #run for 5 seconds
         print "chB"
 
 # MAIN LOOP ###############################################
-    print "fwd"
-    gpio.output(R1pin, 1)
-    gpio.output(R2pin, 0)
-    pwm.start(RpwmPin, i*10, 50) # (pin, duty, frequency)
+    fwd(i*10)
 
     #read in an ADC value.
     #if button is pressed, ask for user input
