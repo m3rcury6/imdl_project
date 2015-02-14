@@ -196,8 +196,8 @@ while(not endProgram):
 
 # MAIN LOOP ###############################################
     print "fwd"
-    gpio.output(R1pin, gpio.HIGH)
-    gpio.output(R2pin, gpio.LOW)
+    gpio.output(R1pin, 1)
+    gpio.output(R2pin, 0)
     pwm.start(RpwmPin, 60, 50)
 
     #read in an ADC value.
