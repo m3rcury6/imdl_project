@@ -5,8 +5,6 @@ import time
 import kj
 # import Adafruit_BBIO.UART as serial
 
-print "test edit FROM bbb to computer"
-
 '''
 plan to get this code on track for OA:
 1. get IR pins working
