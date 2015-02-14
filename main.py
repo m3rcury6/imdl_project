@@ -189,7 +189,7 @@ if gpio.event_detected(enRBpin):
 # MAIN START ##############################################
 # while(not endProgram):
 
-for i in range(0,5): #run for 5 seconds
+for i in range(1,7): #run for 5 seconds
     if gpio.event_detected(enRApin):
         print "chA"
     if gpio.event_detected(enRBpin):
@@ -199,7 +199,7 @@ for i in range(0,5): #run for 5 seconds
     print "fwd"
     gpio.output(R1pin, 1)
     gpio.output(R2pin, 0)
-    pwm.start(RpwmPin, 60, 50)
+    pwm.start(RpwmPin, i*10, 50) # (pin, duty, frequency)
 
     #read in an ADC value.
     #if button is pressed, ask for user input
