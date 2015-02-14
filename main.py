@@ -13,6 +13,7 @@ plan to get this code on track for OA:
 3. link IR to adjustment in motor comm
 '''
 
+print "change made at 19:09"
 
 
 def MLComm(velocity,kjgdir):
