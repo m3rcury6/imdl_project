@@ -191,13 +191,15 @@ while(not endProgram):
         print "chB"
 
 # MAIN LOOP ###############################################
-
+    print "fwd"
+    gpio.output(R1pin,1)
+    gpio.output(R2pin,0)
+    pwm.start(RpwmPin,60,50)
 
     #read in an ADC value.
     #if button is pressed, ask for user input
 
 #    if(ir1>100): ir1 = 100 # help stop garbage data
-    print "lala"
     sleep(1)
 # MAIN END ################################################
 
