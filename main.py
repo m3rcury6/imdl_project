@@ -162,8 +162,8 @@ gpio.setup(enRBpin, gpio.IN)
 gpio.add_event_detect(enRApin, gpio.RISING)
 gpio.add_event_detect(enRBpin, gpio.RISING)
 
-gpio.setup(R1pin, gpio.OUT) # setup h-bridge
-gpio.setup(R2pin, gpio.OUT)
+gpio.setup(R1pin, 1) # setup h-bridge
+gpio.setup(R2pin, 1)
 
 adc.setup()
 
@@ -199,7 +199,7 @@ while(not endProgram):
     gpio.output(R1pin, gpio.HIGH)
     gpio.output(R2pin, gpio.LOW)
     pwm.start(RpwmPin, 60, 50)
-    
+
     #read in an ADC value.
     #if button is pressed, ask for user input
 
