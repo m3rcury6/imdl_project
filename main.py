@@ -211,32 +211,33 @@ for i in range(0,10):
     sleep(1)
 # MAIN END ################################################
 
-# next portion:
-L = tooClose(L)
-M = tooClose(M)
-R = tooClose(R)
+while(0):
+    # next portion:
+    L = tooClose(L)
+    M = tooClose(M)
+    R = tooClose(R)
 
-#now do stuff based on what you know:
-if((not L) and (not M) and (not R)):
-    print "fwd"
-elif((not L) and (not R)):
-    print "left"
-elif((not L and M) or (L and not M) or (L and M)):
-    print "right"
-elif(L and (not M) and R):
-    print "backup, turn"
-else:
-    print "backup, 180"
-
-
-while(1):
-    print "lala"
-    sleep(1)
+    #now do stuff based on what you know:
+    if((not L) and (not M) and (not R)):
+        print "fwd"
+    elif((not L) and (not R)):
+        print "left"
+    elif((not L and M) or (L and not M) or (L and M)):
+        print "right"
+    elif(L and (not M) and R):
+        print "backup, turn"
+    else:
+        print "backup, 180"
 
 
-#next, next portion:
-la=gpio.input(somePin) #left encoder, chA
-lb=gpio.input(somePin) #left encoder, chA
+    while(1):
+        print "lala"
+        sleep(1)
+
+
+    #next, next portion:
+    la=gpio.input(somePin) #left encoder, chA
+    lb=gpio.input(somePin) #left encoder, chA
 
 
 
