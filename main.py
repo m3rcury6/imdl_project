@@ -129,26 +129,22 @@ def stop():
 gpio.cleanup()
 pwm.cleanup()
 sleep = time.sleep
-# remember: P9_1,2 = GND // P9_3,4 = 3v3 // P9_5,6 = 5v
-# remember: P9_34 = ADCGND
 b1Pin="P9_12"
 b2Pin="P9_15"
-irLPin="P9_39" #ADC0 #note: refer to ADC still as P#_##
-irMPin="P9_40" #ADC1
-irRPin="P9_37" #ADC2
-enRApin="P8_3" #encoder, right, chA
-enRBpin="P8_4" #encoder, right, chB
+irLPin="P9_39"  #ADC0 #note: refer to ADC still as P#_##
+irMPin="P9_40"  #ADC1
+irRPin="P9_37"  #ADC2
+enRApin="P8_3"  #encoder, right, chA
+enRBpin="P8_4"  #encoder, right, chB
+L1pin="P8_5"    #h-bridge, left
+L2pin="P8_6"    #h-bridge, left
+R1pin="P8_14"   #h-bridge, right
+R2pin="P8_15"   #h-bridge, right
+LpwmPin="P9_14" #h-bridge, left
+RpwmPin="P9_16" #h-bridge, left
 
-L1pin="P8_5"
-L2pin="P8_6"
-R1pin="P8_14"
-R2pin="P8_15"
-LpwmPin="P9_14"
-RpwmPin="P9_16"
 
 endProgram=0
-
-
 minDist=17 #cm
 
 # setting up pin directions
@@ -192,7 +188,8 @@ if gpio.event_detected(enRBpin):
 
 # MAIN START ##############################################
 # while(not endProgram):
-for i in range(0,10):
+
+for i in range(0,5): #run for 5 seconds
     if gpio.event_detected(enRApin):
         print "chA"
     if gpio.event_detected(enRBpin):
@@ -228,17 +225,6 @@ while(0):
         print "backup, turn"
     else:
         print "backup, 180"
-
-
-    while(1):
-        print "lala"
-        sleep(1)
-
-
-    #next, next portion:
-    la=gpio.input(somePin) #left encoder, chA
-    lb=gpio.input(somePin) #left encoder, chA
-
 
 
 
