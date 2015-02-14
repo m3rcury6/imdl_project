@@ -152,12 +152,15 @@ endProgram=0
 minDist=17 #cm
 
 # setting up pin directions
-gpio.setup(b1Pin,gpio.IN) # set up input buttons
-gpio.setup(b2Pin,gpio.IN)
+    # note, code replacements for simplicity:
+    # 0 = gpio.IN, gpio.LOW
+    # 1 = gpio.OUT, gpio.HIGH
+gpio.setup(b1Pin,0) # set up input buttons
+gpio.setup(b2Pin,0)
 gpio.add_event_detect(b1Pin,gpio.RISING) # pause when pressed
 gpio.add_event_detect(b2Pin,gpio.HIGH) # flash LED when pressed
 
-gpio.setup(enRApin, gpio.IN) # setup encoder inputs
+gpio.setup(enRApin, 0) # setup encoder inputs
 gpio.setup(enRBpin, gpio.IN)
 gpio.add_event_detect(enRApin, gpio.RISING)
 gpio.add_event_detect(enRBpin, gpio.RISING)
@@ -188,7 +191,8 @@ if gpio.event_detected(enRBpin):
 
 
 # MAIN START ##############################################
-while(not endProgram):
+# while(not endProgram):
+for i in range(0,10):
     if gpio.event_detected(enRApin):
         print "chA"
     if gpio.event_detected(enRBpin):
