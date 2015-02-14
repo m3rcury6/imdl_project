@@ -106,8 +106,8 @@ def fwd():
     gpio.output(L2pin,1)
     gpio.output(R1pin,1)
     gpio.output(R2pin,0)
-    pwm.start(LpwmPin,60,50)
-    pwm.start(RpwmPin,60,50)
+    # pwm.start(LpwmPin,60,50)
+    # pwm.start(RpwmPin,60,50)
 
 def bwd():
     print "bwd"
