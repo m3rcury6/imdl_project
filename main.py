@@ -104,10 +104,10 @@ def fwd():
     print "fwd"
     gpio.output(L1pin,0)
     gpio.output(L2pin,1)
-    gpio.output(R1pin,1)
+    gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
     gpio.output(R2pin,0)
-    # pwm.start(LpwmPin,60,50)
-    # pwm.start(RpwmPin,60,50)
+    pwm.start(LpwmPin,60,50)
+    pwm.start(RpwmPin,60,50)
 
 def bwd():
     print "bwd"
@@ -163,7 +163,7 @@ gpio.add_event_detect(enRBpin, gpio.RISING)
 
 gpio.setup(R1pin, 1) # setup h-bridge
 gpio.setup(R2pin, 1)
-
+pwm.start(RpwmPin,0,50)
 adc.setup()
 
 sleep(1)
