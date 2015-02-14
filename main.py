@@ -151,22 +151,26 @@ endProgram=0
 
 minDist=17 #cm
 
-
-gpio.setup(b1Pin,gpio.IN)
+# setting up pin directions
+gpio.setup(b1Pin,gpio.IN) # set up input buttons
 gpio.setup(b2Pin,gpio.IN)
 gpio.add_event_detect(b1Pin,gpio.RISING) # pause when pressed
 gpio.add_event_detect(b2Pin,gpio.HIGH) # flash LED when pressed
 
-gpio.setup(enRApin,gpio.IN)
-gpio.setup(enRBpin,gpio.IN)
-gpio.add_event_detect(enRApin,gpio.RISING)
-gpio.add_event_detect(enRBpin,gpio.RISING)
+gpio.setup(enRApin, gpio.IN) # setup encoder inputs
+gpio.setup(enRBpin, gpio.IN)
+gpio.add_event_detect(enRApin, gpio.RISING)
+gpio.add_event_detect(enRBpin, gpio.RISING)
 
+gpio.setup(R1pin, gpio.OUT) # setup h-bridge
+gpio.setup(R2pin, gpio.OUT)
 
 adc.setup()
 
 sleep(1)
 print "starting"
+
+
 
 
 # INT LIST START ###########################
@@ -192,9 +196,9 @@ while(not endProgram):
 
 # MAIN LOOP ###############################################
     print "fwd"
-    gpio.output(R1pin,1)
-    gpio.output(R2pin,0)
-    pwm.start(RpwmPin,60,50)
+    gpio.output(R1pin, 1)
+    gpio.output(R2pin, 0)
+    pwm.start(RpwmPin, 60, 50)
 
     #read in an ADC value.
     #if button is pressed, ask for user input
@@ -204,9 +208,9 @@ while(not endProgram):
 # MAIN END ################################################
 
 # next portion:
-L=tooClose(L)
-M=tooClose(M)
-R=tooClose(R)
+L = tooClose(L)
+M = tooClose(M)
+R = tooClose(R)
 
 #now do stuff based on what you know:
 if((not L) and (not M) and (not R)):
