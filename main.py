@@ -109,7 +109,7 @@ def fwd(dutyCycle):
     gpio.output(R2pin,0)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
-
+#def fwd
 def bwd(dutyCycle):
     print "bwd"
     gpio.output(L1pin,1)
@@ -118,7 +118,7 @@ def bwd(dutyCycle):
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
-
+#def bwd
 def left(dutyCycle):
     # will initially do 0-radius turns
     print "left"
@@ -128,7 +128,7 @@ def left(dutyCycle):
     gpio.output(R2pin,0)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
-
+#def left
 def right(dutyCycle):
     # will initially do 0-radius turns
     print "right"
@@ -138,7 +138,7 @@ def right(dutyCycle):
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
-
+#def right
 def stop():
     print "stop"
     gpio.output(L1pin,1)
@@ -147,13 +147,13 @@ def stop():
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,0,50)
     pwm.start(RpwmPin,0,50)
+#def stop
 
-# comment
 
 # MAIN START ##############################################
 sleep = time.sleep
 b1Pin="P9_12"
-b2Pin="P9_15"
+b2Pin="P9_23"
 irLPin="P9_39"  #ADC0 #note: refer to ADC still as P#_##
 irMPin="P9_40"  #ADC1
 irRPin="P9_37"  #ADC2
@@ -177,7 +177,7 @@ minDist=17 #cm
 gpio.setup(b1Pin,0) # set up input buttons
 gpio.setup(b2Pin,0)
 gpio.add_event_detect(b1Pin,gpio.RISING) # pause when pressed
-gpio.add_event_detect(b2Pin,gpio.HIGH) # flash LED when pressed
+gpio.add_event_detect(b2Pin,gpio.RISING) # flash LED when pressed
 
 gpio.setup(enRApin, 0) # setup encoder inputs
 gpio.setup(enRBpin, gpio.IN)
@@ -196,7 +196,7 @@ gpio.output(R2pin, 0)
 adc.setup()
 
 sleep(1)
-print "starting"
+print "Starting"
 
 
 
