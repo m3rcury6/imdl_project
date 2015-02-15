@@ -52,7 +52,7 @@ def USELESS_calibrate():
     # print M
 #def USELESS_calibrate
 
-def printIR():
+def getIR():
     L=0.0
     M=0.0
     R=0.0
@@ -68,7 +68,7 @@ def printIR():
     M=M>>k
     R=int(R)
     R=R>>k
-    print L,M,R
+    return (L,M,R)
 #def printIR
 
 def fwd(dutyCycle):
@@ -198,9 +198,10 @@ while(not prgmDone):
         print "chB"
     if gpio.event_detected(b2Pin):
         prgmDone=1
+        print "Ending Program"
 
-    printIR()
-
+    (L,M,R) = getIR()
+    print L,M,R
     sleep(1)
 
 
