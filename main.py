@@ -159,12 +159,14 @@ gpio.setup(enRBpin, gpio.IN)
 gpio.add_event_detect(enRApin, gpio.RISING)
 gpio.add_event_detect(enRBpin, gpio.RISING)
 
-gpio.setup(R1pin, 1) # setup h-bridge
+gpio.setup(R1pin, 1) # setup h-bridge direction
 gpio.setup(R2pin, 1)
-# pwm.start(RpwmPin,0,50) # this DOES NOT help prevent initial surge of 100% pwm
 gpio.setup(L1pin, 1)
 gpio.setup(L2pin, 1)
-
+gpio.output(L1pin, 0) # set default value to low
+gpio.output(L2pin, 0)
+gpio.output(R1pin, 0)
+gpio.output(R2pin, 0)
 
 adc.setup()
 
@@ -198,8 +200,11 @@ for i in range(1,7): #run for 5 seconds
         print "chB"
 
 # MAIN LOOP ###############################################
-    print "fuck you science"
-
+    print "fwd"
+    gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
+    gpio.output(R2pin,0)
+    pwm.start(RpwmPin,50,50)
+    
     #read in an ADC value.
     #if button is pressed, ask for user input
 
