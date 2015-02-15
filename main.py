@@ -205,6 +205,11 @@ for i in range(1,7): #run for 5 seconds
     gpio.output(R2pin,0)
     pwm.start(RpwmPin,i*10,50)
 
+    gpio.output(L1pin,0)
+    gpio.output(L2pin,1)
+    pwm.start(LpwmPin,50,50)
+
+
     #read in an ADC value.
     #if button is pressed, ask for user input
 
