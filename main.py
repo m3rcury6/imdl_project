@@ -192,6 +192,7 @@ if gpio.event_detected(enRBpin):
 
 # MAIN LOOP ###############################################
 i=0
+c=time.time()
 while(not prgmDone):
     if gpio.event_detected(enRApin):
         print "chA"
@@ -202,20 +203,12 @@ while(not prgmDone):
         print "Ending Program"
 
     (L,M,R) = getIR()
-    print L,M,R
 
 
-    if(i==0):
-        c=time.time()
-        print "start to first run [ms]: ",(c-a)*1000
-        i=i+1
+    print L,M,R, (time.time()-c)
 
-    elif(i==1):
-        i=i+1
-        print "loop time w/ sleep [ms]: ",(time.time()-c)*1000
-        
     sleep(1)
-
+    c=time.time()
 
 
     #read in an ADC value.
