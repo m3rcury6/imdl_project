@@ -208,7 +208,7 @@ for i in range(1,7): #run for 5 seconds
 
     gpio.output(L1pin,0)
     gpio.output(L2pin,1)
-    pwm.start(LpwmPin,50,50)
+    pwm.start(LpwmPin,80-i*10,50)
 
 
     #read in an ADC value.
