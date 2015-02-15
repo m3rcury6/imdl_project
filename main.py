@@ -223,19 +223,20 @@ for i in range(0,7): #run for x seconds
 
 # MAIN LOOP ###############################################
 
-    if(i==1):
-        fwd(50)
-    elif(i==2):
-        bwd(50)
-    elif(i==3):
-        stop()
-    elif(i==4):
-        left(70)
-    elif(i==5):
-        right(70)
-    else:
-        print "... ", i
-    sleep(1)
+    # if(i==1):
+    #     fwd(50)
+    # elif(i==2):
+    #     bwd(50)
+    # elif(i==3):
+    #     stop()
+    # elif(i==4):
+    #     left(70)
+    # elif(i==5):
+    #     right(70)
+    # else:
+    #     print "... ", i
+    print "lala"
+    sleep(0.5)
 
 
 
