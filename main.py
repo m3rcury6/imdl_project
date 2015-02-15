@@ -63,7 +63,7 @@ def getIR():
         L=L+kj.irReadcm (irLPin)
         M=M+kj.irReadcm(irMPin)
         R=R+kj.irReadcm(irRPin)
-        sleep(1e-6)
+        # sleep(1e-6)
     L=int(L)
     L=L>>k
     M=int(M)
@@ -205,7 +205,7 @@ while(not prgmDone):
     (L,M,R) = getIR()
 
 
-    print L,M,R, (time.time()-c)
+    print L,M,R, (time.time()-c)*1000
 
     sleep(1)
     c=time.time()
