@@ -136,7 +136,7 @@ LpwmPin="P9_21" #h-bridge, left
 RpwmPin="P9_16" #h-bridge, right
 
 
-endProgram=0
+prgmDone=0
 
 
 # setting up pin directions
@@ -172,7 +172,7 @@ kj.blink(0)
 
 # INT LIST START ###########################
 if gpio.event_detected(b1Pin):
-    endProgram=1
+    prgmDone=1
 if gpio.event_detected(b2Pin):
     print "Flash LED"
 
@@ -185,32 +185,23 @@ if gpio.event_detected(enRBpin):
 
 
 # MAIN START ##############################################
-# while(not endProgram):
+
 
 
 
 # MAIN LOOP ###############################################
-
-for i in range(0,7): #run for x seconds
+i=0
+while(not prgmDone):
     if gpio.event_detected(enRApin):
         print "chA"
     if gpio.event_detected(enRBpin):
         print "chB"
     if gpio.event_detected(b2Pin):
-        print "Flash LED"
+        prgmDone=1
 
-    if(i==1):
-        fwd(50)
-    elif(i==2):
-        bwd(50)
-    elif(i==3):
-        stop()
-    elif(i==4):
-        left(70)
-    elif(i==5):
-        right(70)
+    printIR()
 
-    sleep(3)
+    sleep(1)
 
 
 
