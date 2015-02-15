@@ -210,11 +210,12 @@ while(not prgmDone):
 
     if((not L) and (not M) and (not R)):
         print "fwd"
-    elif((not L) and (not R)):
+    elif((not L) and R):
         print "left"
-    elif((not L and M) or (L and not M) or (L and M)):
+    elif((not R) and ((not L and M) or (L and not M))):
         print "right"
-    elif(L and (not M) and R):
+
+    elif((L) and ((not R and M) or (R and not M))):
         print "backup, turn"
     else:
         print "backup, 180"
