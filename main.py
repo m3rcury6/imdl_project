@@ -2,8 +2,10 @@ import Adafruit_BBIO.GPIO as gpio
 import Adafruit_BBIO.ADC as adc
 import Adafruit_BBIO.PWM as pwm
 import time
-import kj
+sleep = time.sleep
 
+import kj
+a=time.time()
 gpio.cleanup()
 pwm.cleanup()
 
@@ -120,7 +122,6 @@ def stop():
 #def stop
 
 # MAIN START ##############################################
-sleep = time.sleep
 b1Pin="P9_12"
 b2Pin="P9_23"
 irLPin="P9_39"  #ADC0 #note: refer to ADC still as P#_##
@@ -202,6 +203,14 @@ while(not prgmDone):
 
     (L,M,R) = getIR()
     print L,M,R
+
+
+    if(i==0):
+        c=time.time()
+        print "start to first run [ms]: ",(a-c)*1000
+        i=i+1
+    elif(i==1):
+        print "loop time w/ sleep [ms]: ",(c-time.time())*1000
     sleep(1)
 
 
