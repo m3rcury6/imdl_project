@@ -203,8 +203,8 @@ for i in range(1,7): #run for 5 seconds
     print "fwd"
     gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
     gpio.output(R2pin,0)
-    pwm.start(RpwmPin,50,50)
-    
+    pwm.start(RpwmPin,i*10,50)
+
     #read in an ADC value.
     #if button is pressed, ask for user input
 
