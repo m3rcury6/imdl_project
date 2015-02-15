@@ -216,7 +216,7 @@ for i in range(0,5): #run for x seconds
         print "... ", i
 
 
-    fwd(i)
+    fwd(i*10)
 
 
     #read in an ADC value.
