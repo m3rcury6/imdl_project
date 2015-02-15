@@ -208,9 +208,7 @@ while(not prgmDone):
     c=time.time()
     print L,M,R, a*1000
 
-    if(a<50e-3):
-        sleep(50e-3 - a)
-
+    
 
     #read in an ADC value.
     #if button is pressed, ask for user input
