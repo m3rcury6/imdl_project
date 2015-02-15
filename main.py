@@ -237,14 +237,13 @@ for i in range(0,7): #run for x seconds
         print "... ", i
 
 
-    fwd(i*10)
 
 
     #read in an ADC value.
     #if button is pressed, ask for user input
 
 #    if(ir1>100): ir1 = 100 # help stop garbage data
-    sleep(1.3)
+    sleep(1)
 # MAIN END ################################################
 
 while(0):
