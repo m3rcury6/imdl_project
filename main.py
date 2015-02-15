@@ -204,11 +204,19 @@ while(not prgmDone):
 
     (L,M,R) = getIR()
 
+    L = kj.tooClose(L)
+    M = kj.tooClose(M)
+    R = kj.tooClose(R)
+
+
+
+
+
     a=time.time()-c
     c=time.time()
     print L,M,R, a*1000
 
-    
+
 
     #read in an ADC value.
     #if button is pressed, ask for user input
