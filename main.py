@@ -201,7 +201,22 @@ for i in range(1,7): #run for 5 seconds
         print "chB"
 
 # MAIN LOOP ###############################################
-    fwd(i*10)
+
+    if(i==1):
+        print i
+    elif(i==2):
+        print i
+    elif(i==3):
+        print i
+    elif(i==4):
+        print i
+    elif(i==5):
+        print i
+    else:
+        print "... ", i
+
+
+    fwd(100)
 
 
     #read in an ADC value.
