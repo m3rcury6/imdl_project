@@ -204,11 +204,12 @@ while(not prgmDone):
 
     (L,M,R) = getIR()
 
-
-    print L,M,R, (time.time()-c)*1000
-
-    sleep(1)
+    a=time.time()-c
     c=time.time()
+    print L,M,R, a*1000
+
+    sleep(50e-3 - a)
+
 
 
     #read in an ADC value.
