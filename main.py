@@ -118,6 +118,27 @@ def bwd(dutyCycle):
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
+
+def left(dutyCycle):
+    # will initially do 0-radius turns
+    print "left"
+    gpio.output(L1pin,1)
+    gpio.output(L2pin,0)
+    gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
+    gpio.output(R2pin,0)
+    pwm.start(LpwmPin,dutyCycle,50)
+    pwm.start(RpwmPin,dutyCycle,50)
+
+def right(dutyCycle):
+    # will initially do 0-radius turns
+    print "right"
+    gpio.output(L1pin,0)
+    gpio.output(L2pin,1)
+    gpio.output(R1pin,0) #this makes mR turn clockwise, fwd motion.
+    gpio.output(R2pin,1)
+    pwm.start(LpwmPin,dutyCycle,50)
+    pwm.start(RpwmPin,dutyCycle,50)
+
 def stop():
     print "stop"
     pwm.stop(LpwmPin)
@@ -194,7 +215,7 @@ if gpio.event_detected(enRBpin):
 # MAIN START ##############################################
 # while(not endProgram):
 
-for i in range(0,5): #run for x seconds
+for i in range(0,7): #run for x seconds
     if gpio.event_detected(enRApin):
         print "chA"
     if gpio.event_detected(enRBpin):
@@ -203,15 +224,15 @@ for i in range(0,5): #run for x seconds
 # MAIN LOOP ###############################################
 
     if(i==1):
-        print i
+        fwd(50)
     elif(i==2):
-        print i
+        bwd(50)
     elif(i==3):
-        print i
+        stop()
     elif(i==4):
-        print i
+        left(70)
     elif(i==5):
-        print i
+        right(70)
     else:
         print "... ", i
 
