@@ -208,7 +208,16 @@ while(not prgmDone):
     M = kj.tooClose(M)
     R = kj.tooClose(R)
 
-
+    if((not L) and (not M) and (not R)):
+        print "fwd"
+    elif((not L) and (not R)):
+        print "left"
+    elif((not L and M) or (L and not M) or (L and M)):
+        print "right"
+    elif(L and (not M) and R):
+        print "backup, turn"
+    else:
+        print "backup, 180"
 
 
 
@@ -216,6 +225,7 @@ while(not prgmDone):
     c=time.time()
     print L,M,R, a*1000
 
+    sleep(.5)
 
 
     #read in an ADC value.
@@ -232,16 +242,7 @@ while(not prgmDone):
 #     R = tooClose(R)
 #
 #     #now do stuff based on what you know:
-#     if((not L) and (not M) and (not R)):
-#         print "fwd"
-#     elif((not L) and (not R)):
-#         print "left"
-#     elif((not L and M) or (L and not M) or (L and M)):
-#         print "right"
-#     elif(L and (not M) and R):
-#         print "backup, turn"
-#     else:
-#         print "backup, 180"
+
 #
 
 
