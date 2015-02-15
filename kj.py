@@ -1,4 +1,5 @@
 import Adafruit_BBIO.ADC as adc
+import time
 
 # avg #####################################################
 def avg(xarray):
@@ -14,7 +15,6 @@ def pyt(a,b):
     return (a*a+b*b)**0.5
 
 # led #####################################################
-
 def led(which012,bright01):
     st='/sys/class/leds/beaglebone:green:usr0/brightness' #default LED
     if(which012==0):
@@ -25,10 +25,24 @@ def led(which012,bright01):
         st='/sys/class/leds/beaglebone:green:usr2/brightness'
     else:
         print "error"
+    #note: leaving 3 to trigger on cpu0, to give status
 
     value = open(st,'w')
     value.write(str(bright01))
     value.close()
+
+#blink ####################################################
+def blink(which012):
+    led(which012,1)
+    time.sleep(.01)
+
+    led(which012,0)
+    time.sleep(.01)
+
+    led(which012,1)
+    time.sleep(.05)
+
+    led(which012,0)
 
 # stdev ###################################################
 def stdev(xarray):
@@ -45,6 +59,12 @@ def map(original,inLow,inHigh,outLow,outHigh):
     m=(outHigh-outLow)/(inLow-outLow)
     b=outHigh-inHigh*m
     return m*original+b
+
+# tooClose ################################################
+minDist=17 #cm
+def tooClose(cmDistance):
+    if(cmDistance<minDist): return 1
+    else: return 0
 
 # simpleSolve #############################################
 def simpleSolve(kjgFn,yd,xl,xu):

@@ -3,10 +3,9 @@ import Adafruit_BBIO.ADC as adc
 import Adafruit_BBIO.PWM as pwm
 import time
 import kj
+
 gpio.cleanup()
 pwm.cleanup()
-
-# import Adafruit_BBIO.UART as serial
 
 '''
 plan to get this code on track for OA:
@@ -15,35 +14,6 @@ plan to get this code on track for OA:
 2. get manual motor commands working
 3. link IR to adjustment in motor comm
 '''
-
-
-def MLComm(velocity,kjgdir):
-    #take in direction, move motor at that speed
-    if(kjgdir==1):
-        print "Lfwd", velocity
-    elif(kjgdir==2):
-        print "Lbwd"
-    else:
-        print "Lstop"
-#def MLComm
-
-def MRComm(velocity,kjgdir):
-    #take in direction, move motor at that speed
-    if(kjgdir==1):
-        print "Rfwd",velocity
-    elif(kjgdir==2):
-        print "Rbwd"
-    else:
-        print "Rstop"
-#def MRComm
-
-def checkforPause():
-    print "testing"
-
-def tooClose(cmDistance):
-    if(cmDistance<minDist): return 1
-    else: return 0
-#def tooClose
 
 def USELESS_calibrate():
     print "old ir cal values: "
@@ -149,7 +119,6 @@ def stop():
     pwm.start(RpwmPin,0,50)
 #def stop
 
-
 # MAIN START ##############################################
 sleep = time.sleep
 b1Pin="P9_12"
@@ -168,10 +137,10 @@ RpwmPin="P9_16" #h-bridge, right
 
 
 endProgram=0
-minDist=17 #cm
+
 
 # setting up pin directions
-    # note, code replacements for simplicity:
+    # note, code replacements for ease:
     # 0 = gpio.IN, gpio.LOW
     # 1 = gpio.OUT, gpio.HIGH
 gpio.setup(b1Pin,0) # set up input buttons
@@ -195,10 +164,10 @@ gpio.output(R2pin, 0)
 
 adc.setup()
 
+print "Start..."
 sleep(1)
-print "Starting"
-
-
+print "Now"
+kj.blink(0)
 
 
 # INT LIST START ###########################
