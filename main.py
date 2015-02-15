@@ -237,7 +237,7 @@ for i in range(0,7): #run for x seconds
     elif(i==5):
         right(70)
 
-    sleep(1)
+    sleep(3)
 
 
 

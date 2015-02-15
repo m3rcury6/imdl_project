@@ -1,4 +1,5 @@
 import Adafruit_BBIO.ADC as adc
+
 # avg #####################################################
 def avg(xarray):
     # assumes that an array is being passed
@@ -11,6 +12,23 @@ def avg(xarray):
 # pyt #####################################################
 def pyt(a,b):
     return (a*a+b*b)**0.5
+
+# led #####################################################
+
+def led(which012,bright01):
+    st='/sys/class/leds/beaglebone:green:usr0/brightness' #default LED
+    if(which012==0):
+        st='/sys/class/leds/beaglebone:green:usr0/brightness'
+    elif(which012==1):
+        st='/sys/class/leds/beaglebone:green:usr1/brightness'
+    elif(which012==2):
+        st='/sys/class/leds/beaglebone:green:usr2/brightness'
+    else:
+        print "error"
+
+    value = open(st,'w')
+    value.write(str(bright01))
+    value.close()
 
 # stdev ###################################################
 def stdev(xarray):
