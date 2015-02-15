@@ -243,7 +243,7 @@ irReadVarB=7.4789 #default value
 
 def irReadcm(pinString):
     var1=adc.read(pinString)
-    return irReadVarB/var1+irReadVarA #calibration constants
+    return irReadVarB/(var1+1e-6)+irReadVarA #calibration constants
 
 # TruthTurn ###############################################
 

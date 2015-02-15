@@ -58,7 +58,7 @@ def printIR():
     R=0.0
     k=3
     for i in range(0,2**k):
-        L=L+kj.irReadcm(irLPin)
+        L=L+kj.irReadcm (irLPin)
         M=M+kj.irReadcm(irMPin)
         R=R+kj.irReadcm(irRPin)
         sleep(1e-6)
