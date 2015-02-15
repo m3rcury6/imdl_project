@@ -34,13 +34,13 @@ def led(which012,bright01):
 #blink ####################################################
 def blink(which012):
     led(which012,1)
-    time.sleep(.01)
+    time.sleep(0.1)
 
     led(which012,0)
-    time.sleep(.01)
+    time.sleep(0.1)
 
     led(which012,1)
-    time.sleep(.05)
+    time.sleep(0.2)
 
     led(which012,0)
 
