@@ -207,10 +207,13 @@ while(not prgmDone):
 
     if(i==0):
         c=time.time()
-        print "start to first run [ms]: ",(a-c)*1000
+        print "start to first run [ms]: ",(c-a)*1000
         i=i+1
+
     elif(i==1):
-        print "loop time w/ sleep [ms]: ",(c-time.time())*1000
+        i=i+1
+        print "loop time w/ sleep [ms]: ",(time.time()-c)*1000
+        
     sleep(1)
 
 
