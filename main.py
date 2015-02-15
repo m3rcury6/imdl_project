@@ -124,7 +124,7 @@ def left(dutyCycle):
     print "left"
     gpio.output(L1pin,1)
     gpio.output(L2pin,0)
-    gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
+    gpio.output(R1pin,1)
     gpio.output(R2pin,0)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
@@ -134,16 +134,19 @@ def right(dutyCycle):
     print "right"
     gpio.output(L1pin,0)
     gpio.output(L2pin,1)
-    gpio.output(R1pin,0) #this makes mR turn clockwise, fwd motion.
+    gpio.output(R1pin,0)
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
 
 def stop():
     print "stop"
-    pwm.stop(LpwmPin)
-    pwm.stop(RpwmPin)
-
+    gpio.output(L1pin,1)
+    gpio.output(L2pin,1)
+    gpio.output(R1pin,1)
+    gpio.output(R2pin,1)
+    pwm.start(LpwmPin,0,50)
+    pwm.stop(RpwmPin,0,50)
 
 
 
@@ -225,14 +228,14 @@ for i in range(0,7): #run for x seconds
 
     if(i==1):
         fwd(50)
-    # elif(i==2):
-    #     bwd(50)
-    # elif(i==3):
-    #     stop()
-    # elif(i==4):
-    #     left(70)
-    # elif(i==5):
-    #     right(70)
+    elif(i==2):
+        bwd(50)
+    elif(i==3):
+        stop()
+    elif(i==4):
+        left(70)
+    elif(i==5):
+        right(70)
 
     sleep(0.3)
 
