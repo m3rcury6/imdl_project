@@ -235,7 +235,7 @@ for i in range(0,7): #run for x seconds
         right(70)
     else:
         print "... ", i
-
+    sleep(1)
 
 
 
@@ -243,27 +243,27 @@ for i in range(0,7): #run for x seconds
     #if button is pressed, ask for user input
 
 #    if(ir1>100): ir1 = 100 # help stop garbage data
-    sleep(1)
+
 # MAIN END ################################################
-
-while(0):
-    # next portion:
-    L = tooClose(L)
-    M = tooClose(M)
-    R = tooClose(R)
-
-    #now do stuff based on what you know:
-    if((not L) and (not M) and (not R)):
-        print "fwd"
-    elif((not L) and (not R)):
-        print "left"
-    elif((not L and M) or (L and not M) or (L and M)):
-        print "right"
-    elif(L and (not M) and R):
-        print "backup, turn"
-    else:
-        print "backup, 180"
-
+#
+# while(0):
+#     # next portion:
+#     L = tooClose(L)
+#     M = tooClose(M)
+#     R = tooClose(R)
+#
+#     #now do stuff based on what you know:
+#     if((not L) and (not M) and (not R)):
+#         print "fwd"
+#     elif((not L) and (not R)):
+#         print "left"
+#     elif((not L and M) or (L and not M) or (L and M)):
+#         print "right"
+#     elif(L and (not M) and R):
+#         print "backup, turn"
+#     else:
+#         print "backup, 180"
+#
 
 
 gpio.cleanup()

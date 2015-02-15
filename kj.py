@@ -8,6 +8,10 @@ def avg(xarray):
         sumavg=sumavg+xarray[i]
     return sumavg/n
 
+# pyt #####################################################
+def pyt(a,b):
+    return (a*a+b*b)**0.5
+
 # stdev ###################################################
 def stdev(xarray):
     n=len(xarray)
