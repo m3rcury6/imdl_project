@@ -3,6 +3,9 @@ import Adafruit_BBIO.ADC as adc
 import Adafruit_BBIO.PWM as pwm
 import time
 import kj
+gpio.cleanup()
+pwm.cleanup()
+
 # import Adafruit_BBIO.UART as serial
 
 '''
@@ -124,8 +127,6 @@ def stop():
 
 
 # MAIN START ##############################################
-gpio.cleanup()
-pwm.cleanup()
 sleep = time.sleep
 b1Pin="P9_12"
 b2Pin="P9_15"
@@ -138,7 +139,7 @@ L1pin="P8_5"    #h-bridge, left
 L2pin="P8_6"    #h-bridge, left
 R1pin="P8_14"   #h-bridge, right
 R2pin="P8_15"   #h-bridge, right
-LpwmPin="P9_14" #h-bridge, left
+LpwmPin="P9_21" #h-bridge, left
 RpwmPin="P9_16" #h-bridge, right
 
 
@@ -203,7 +204,7 @@ for i in range(1,7): #run for 5 seconds
     print "fwd"
     gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
     gpio.output(R2pin,0)
-    pwm.start(RpwmPin,i*10)
+    pwm.start(RpwmPin,i*10,50)
 
     gpio.output(L1pin,0)
     gpio.output(L2pin,1)
