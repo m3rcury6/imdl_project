@@ -146,7 +146,7 @@ def stop():
     gpio.output(R1pin,1)
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,0,50)
-    pwm.stop(RpwmPin,0,50)
+    pwm.start(RpwmPin,0,50)
 
 
 
