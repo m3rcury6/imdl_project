@@ -225,16 +225,16 @@ for i in range(0,7): #run for x seconds
 
     if(i==1):
         fwd(50)
-    elif(i==2):
-        bwd(50)
-    elif(i==3):
-        stop()
-    elif(i==4):
-        left(70)
-    elif(i==5):
-        right(70)
+    # elif(i==2):
+    #     bwd(50)
+    # elif(i==3):
+    #     stop()
+    # elif(i==4):
+    #     left(70)
+    # elif(i==5):
+    #     right(70)
 
-    sleep(0.5)
+    sleep(0.3)
 
 
 
