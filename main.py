@@ -163,7 +163,7 @@ gpio.output(R1pin, 0)
 gpio.output(R2pin, 0)
 
 adc.setup()
-
+kj.ledINIT()
 print "Start..."
 sleep(1)
 print "Now"
@@ -187,13 +187,17 @@ if gpio.event_detected(enRBpin):
 # MAIN START ##############################################
 # while(not endProgram):
 
+
+
+# MAIN LOOP ###############################################
+
 for i in range(0,7): #run for x seconds
     if gpio.event_detected(enRApin):
         print "chA"
     if gpio.event_detected(enRBpin):
         print "chB"
-
-# MAIN LOOP ###############################################
+    if gpio.event_detected(b2Pin):
+        print "Flash LED"
 
     if(i==1):
         fwd(50)

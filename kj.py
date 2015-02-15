@@ -14,6 +14,28 @@ def avg(xarray):
 def pyt(a,b):
     return (a*a+b*b)**0.5
 
+# ledINIT #################################################
+def ledINIT():
+    st='/sys/class/leds/beaglebone:green:usr0/trigger'
+    value = open(st,'w')
+    value.write(str("none"))
+    value.close()
+
+    st='/sys/class/leds/beaglebone:green:usr1/trigger'
+    value = open(st,'w')
+    value.write(str("none"))
+    value.close()
+
+    st='/sys/class/leds/beaglebone:green:usr2/trigger'
+    value = open(st,'w')
+    value.write(str("none"))
+    value.close()
+
+    st='/sys/class/leds/beaglebone:green:usr3/trigger'
+    value = open(st,'w')
+    value.write(str("cpu0"))
+    value.close()
+
 # led #####################################################
 def led(which012,bright01):
     st='/sys/class/leds/beaglebone:green:usr0/brightness' #default LED
