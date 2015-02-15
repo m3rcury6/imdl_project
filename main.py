@@ -110,14 +110,14 @@ def fwd(dutyCycle):
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
 
-def bwd():
+def bwd(dutyCycle):
     print "bwd"
     gpio.output(L1pin,1)
     gpio.output(L2pin,0)
     gpio.output(R1pin,0)
     gpio.output(R2pin,1)
-    pwm.start(LpwmPin,60,50)
-    pwm.start(RpwmPin,60,50)
+    pwm.start(LpwmPin,dutyCycle,50)
+    pwm.start(RpwmPin,dutyCycle,50)
 def stop():
     print "stop"
     pwm.stop(LpwmPin)
@@ -194,7 +194,7 @@ if gpio.event_detected(enRBpin):
 # MAIN START ##############################################
 # while(not endProgram):
 
-for i in range(1,7): #run for 5 seconds
+for i in range(0,5): #run for x seconds
     if gpio.event_detected(enRApin):
         print "chA"
     if gpio.event_detected(enRBpin):
@@ -216,14 +216,14 @@ for i in range(1,7): #run for 5 seconds
         print "... ", i
 
 
-    fwd(100)
+    fwd(i)
 
 
     #read in an ADC value.
     #if button is pressed, ask for user input
 
 #    if(ir1>100): ir1 = 100 # help stop garbage data
-    sleep(1)
+    sleep(1.3)
 # MAIN END ################################################
 
 while(0):
