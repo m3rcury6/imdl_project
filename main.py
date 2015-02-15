@@ -201,14 +201,7 @@ for i in range(1,7): #run for 5 seconds
         print "chB"
 
 # MAIN LOOP ###############################################
-    print "fwd"
-    gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
-    gpio.output(R2pin,0)
-    pwm.start(RpwmPin,i*10,50)
-
-    gpio.output(L1pin,0)
-    gpio.output(L2pin,1)
-    pwm.start(LpwmPin,80-i*10,50)
+    fwd(i*10)
 
 
     #read in an ADC value.
