@@ -99,21 +99,7 @@ def stop():
     pwm.start(RpwmPin,0,50)
 #def stop
 
-def userInput():
-    notdone=1
-    choice=3
-    while(notdone):
-        if gpio.event_detected(pinUP):
-            notdone=0
-            choice=0
-        if gpio.event_detected(pinDN):
-            notdone=0
-            choice=1
-        if gpio.event_detected(pinYES):
-            notdone=0
-            choice=2
-    time.sleep(.25)
-    return choice
+
 # MAIN START ##############################################
 b1Pin="P9_12"
 pin1="P9_23"
@@ -181,6 +167,23 @@ sequ3a=['cam s1','cam s2']
 sequ3b=['IR s1','IR s2']
 
 
+
+def userInput():
+    notdone=1
+    choice=3
+    while(notdone):
+        if gpio.event_detected(pinUP):
+            notdone=0
+            choice=0
+        if gpio.event_detected(pinDN):
+            notdone=0
+            choice=1
+        if gpio.event_detected(pinYES):
+            notdone=0
+            choice=2
+        time.sleep(.1)
+    time.sleep(.1)
+    return choice
 
 def TopMenu():
     user=0  #this will be used for selection
