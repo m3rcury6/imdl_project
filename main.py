@@ -57,12 +57,12 @@ def decision(Ldist,Mdist,Rdist):
     else:
         print "backup, 180"
         bwd(speed)
-        sleep(.35) # estimated as about 13cm
+        sleep(1)
         right(speed)
-        sleep(1.8) # estimated as a half turn
+        sleep(1) 
 
 def fwd(dutyCycle):
-    print "fwd"
+    # print "fwd"
     gpio.output(L1pin,0)
     gpio.output(L2pin,1)
     gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
@@ -71,7 +71,7 @@ def fwd(dutyCycle):
     pwm.start(RpwmPin,dutyCycle,50)
 
 def bwd(dutyCycle):
-    print "bwd"
+    # print "bwd"
     gpio.output(L1pin,1)
     gpio.output(L2pin,0)
     gpio.output(R1pin,0)
@@ -81,7 +81,7 @@ def bwd(dutyCycle):
 
 def left(dutyCycle):
     # will initially do 0-radius turns
-    print "left"
+    # print "left"
     gpio.output(L1pin,1)
     gpio.output(L2pin,0)
     gpio.output(R1pin,1)
@@ -91,7 +91,7 @@ def left(dutyCycle):
 
 def right(dutyCycle):
     # will initially do 0-radius turns
-    print "right"
+    # print "right"
     gpio.output(L1pin,0)
     gpio.output(L2pin,1)
     gpio.output(R1pin,0)
@@ -100,7 +100,7 @@ def right(dutyCycle):
     pwm.start(RpwmPin,dutyCycle,50)
 
 def stop():
-    print "stop"
+    # print "stop"
     gpio.output(L1pin,1)
     gpio.output(L2pin,1)
     gpio.output(R1pin,1)
