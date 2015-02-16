@@ -75,11 +75,11 @@ def fwd(dutyCycle):
     gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
     gpio.output(R2pin,0)
     try:
-        pwm.start(LpwmPin,dutyCycle,50)
+        pwm.set_duty_cycle(LpwmPin,dutyCycle)
     except IOError as e:
         print "KJG: pwm error"
     try:
-        pwm.start(RpwmPin,dutyCycle,50)
+        pwm.set_duty_cycle(RpwmPin,dutyCycle)
     except IOError as e:
         print "KJG: pwm error"
 
@@ -90,13 +90,16 @@ def bwd(dutyCycle):
     gpio.output(R1pin,0)
     gpio.output(R2pin,1)
     try:
-        pwm.start(LpwmPin,dutyCycle,50)
+        pwm.set_duty_cycle(LpwmPin,dutyCycle)
     except IOError as e:
         print "KJG: pwm error"
     try:
-        pwm.start(RpwmPin,dutyCycle,50)
+        pwm.set_duty_cycle(RpwmPin,dutyCycle)
     except IOError as e:
         print "KJG: pwm error"
+
+
+
 
 def left(dutyCycle):
     # will initially do 0-radius turns
@@ -106,11 +109,11 @@ def left(dutyCycle):
     gpio.output(R1pin,1)
     gpio.output(R2pin,0)
     try:
-        pwm.start(LpwmPin,dutyCycle,50)
+        pwm.set_duty_cycle(LpwmPin,dutyCycle)
     except IOError as e:
         print "KJG: pwm error"
     try:
-        pwm.start(RpwmPin,dutyCycle,50)
+        pwm.set_duty_cycle(RpwmPin,dutyCycle)
     except IOError as e:
         print "KJG: pwm error"
 
@@ -122,11 +125,11 @@ def right(dutyCycle):
     gpio.output(R1pin,0)
     gpio.output(R2pin,1)
     try:
-        pwm.start(LpwmPin,dutyCycle,50)
+        pwm.set_duty_cycle(LpwmPin,dutyCycle)
     except IOError as e:
         print "KJG: pwm error"
     try:
-        pwm.start(RpwmPin,dutyCycle,50)
+        pwm.set_duty_cycle(RpwmPin,dutyCycle)
     except IOError as e:
         print "KJG: pwm error"
 
@@ -137,11 +140,11 @@ def stop():
     gpio.output(R1pin,1)
     gpio.output(R2pin,1)
     try:
-        pwm.start(LpwmPin,0,50)
+        pwm.set_duty_cycle(LpwmPin,0)
     except IOError as e:
         print "KJG: pwm error"
     try:
-        pwm.start(RpwmPin,0,50)
+        pwm.set_duty_cycle(RpwmPin,0)
     except IOError as e:
         print "KJG: pwm error"
 
@@ -199,6 +202,12 @@ gpio.add_event_detect(pinYES,gpio.RISING) # end program when pressed
 
 adc.setup()
 kj.ledINIT()
+pwm.start(LpwmPin,0,50) #pin, duty, frequency
+pwm.start(RpwmPin,0,50)
+
+
+
+
 print "Start..."
 sleep(1)
 print "Now"
