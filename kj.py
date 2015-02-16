@@ -237,8 +237,6 @@ def irCalibrate(xarr,yarr):
 irReadVarA=-2.1485 #default value
 irReadVarB=7.4789 #default value
 def irReadcm(pinString):
-    var0=adc.read(pinString)
-    a=1+1
     var1=adc.read(pinString)
     return irReadVarB/(var1+1e-6)+irReadVarA #calibration constants
 
@@ -358,6 +356,30 @@ def LCDMenu():
         # just end the program
         print "ERROR: option out of bounds, terminating"
         return 1
+
+def analogRead(adcNum):
+    path='/sys/devices/ocp.2/helper.14/AIN'
+    # first try, error here
+    f=open(path+str(adcNum))
+    a=f.read()
+    f.close()
+    # 2nd try
+    f=open(path+str(adcNum))
+    a=f.read()
+    f.close()
+    # 3rd try
+    f=open(path+str(adcNum))
+    a=f.read()
+    f.close()
+    # 4th try, now it should be updated (error in driver)
+    f=open(path+str(adcNum))
+    a=f.read()
+    f.close()
+
+    a=a[0:len(a)-1]
+    return int(a)
+
+
 
 
 
