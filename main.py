@@ -165,7 +165,7 @@ print "Start..."
 sleep(1)
 print "Now"
 kj.blink(0)
-
+deathcounter=0
 # menu options can either go on top or bottom
 # sequence options must go on top
 prevTime=time.time()
@@ -182,7 +182,8 @@ while(not prgmDone):
 
     LoopTime=time.time()-prevTime
     prevTime=time.time()
-    print LoopTime*1000
+    deathcounter+=1
+    print deathcounter, LoopTime*1000
 
     if gpio.event_detected(mainPin):
         prgmDone=1
