@@ -373,5 +373,4 @@ def analogRead(adcNum):
         return int(a)
 
 
-print ""
 # end of file #############################################

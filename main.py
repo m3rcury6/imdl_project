@@ -21,17 +21,17 @@ def getIR():
     Rdist=0.0
     k=3
     for i in range(0,2**k):
-        sleep(1e-4)
+        # sleep(1e-4)
         adcL=kj.irReadcm(irLPin)
-        sleep(1e-4)
+        # sleep(1e-4)
         adcM=kj.irReadcm(irMPin)
-        sleep(1e-4)
+        # sleep(1e-4)
         adcR=kj.irReadcm(irRPin)
-        sleep(1e-4)
+        # sleep(1e-4)
         Ldist=Ldist+adcL
         Mdist=Mdist+adcM
         Rdist=Rdist+adcR
-        sleep(1e-3) # this whole fn takes ~40ms to do anyway
+        # sleep(1e-3) # this whole fn takes ~40ms to do anyway
     Ldist=int(Ldist)
     Ldist=Ldist>>k
     Mdist=int(Mdist)
@@ -183,15 +183,15 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-    # (L,M,R) = getIR()
-    # print L,M,R
+    (L,M,R) = getIR()
+    print L,M,R
     # decision(L,M,R)
 
 
-    L=kj.analogRead(0)
-    M=kj.analogRead(1)
-    R=kj.analogRead(2)
-    print L,M,R
+    # L=kj.analogRead(0)
+    # M=kj.analogRead(1)
+    # R=kj.analogRead(2)
+    # print L,M,R
 
     # LoopTime=time.time()-prevTime
     # prevTime=time.time()
