@@ -236,8 +236,8 @@ def irCalibrate(xarr,yarr):
 # irReadcm ################################################
 irReadVarA=-2.1485 #default value
 irReadVarB=7.4789 #default value
-def irReadcm(pinString):
-    var1=adc.read(pinString)
+def irReadcm(adcValue):
+    var1=analogRead(adcValue)/(1800.0)
     return irReadVarB/(var1+1e-6)+irReadVarA #calibration constants
 
 # LCDMenu #################################################
@@ -358,9 +358,8 @@ def LCDMenu():
         return 1
 
 def analogRead(adcNum):
-    path='/sys/devices/ocp.2/helper.14/AIN'
-    # first try, error here
 
+    path='/sys/devices/ocp.2/helper.14/AIN'
     a=900
     try:
         for i in range(0,6): # try n-times
@@ -372,8 +371,6 @@ def analogRead(adcNum):
     except IOError as e:
         print "kjg: IOError"
         return a
-
-
 
 
 print ""
