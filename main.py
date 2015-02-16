@@ -197,7 +197,7 @@ while(not prgmDone):
     prevTime=time.time()
     deathcounter+=1
     print deathcounter, LoopTime*1000
-    # sleep(1)
+    sleep(1)
     if gpio.event_detected(mainPin):
         prgmDone=1
         print "Ending Program"
