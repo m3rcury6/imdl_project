@@ -16,23 +16,22 @@ plan to get this code on track for OA:
 '''
 
 def getIR():
-    L=0.0
-    M=0.0
-    R=0.0
+    Ldist=0.0
+    Mdist=0.0
+    Rdist=0.0
     k=3
     for i in range(0,2**k):
-        L=L+kj.irReadcm (irLPin)
-        M=M+kj.irReadcm(irMPin)
-        R=R+kj.irReadcm(irRPin)
-        # sleep(1e-6)
-    L=int(L)
-    L=L>>k
-    M=int(M)
-    M=M>>k
-    R=int(R)
-    R=R>>k
-    return (L,M,R)
-#def printIR
+        Ldist=Ldist+kj.irReadcm (irLPin)
+        Mdist=Mdist+kj.irReadcm(irMPin)
+        Rdist=Rdist+kj.irReadcm(irRPin)
+        # sleep(1e-6) this whole fn takes ~40ms to do anyway
+    Ldist=int(Ldist)
+    Ldist=Ldist>>k
+    Mdist=int(Mdist)
+    Mdist=Mdist>>k
+    Rdist=int(Rdist)
+    Rdist=Rdist>>k
+    return (Ldist,Mdist,Rdist)
 
 def decision(Ldist,Mdist,Rdist):
 
@@ -41,15 +40,26 @@ def decision(Ldist,Mdist,Rdist):
     Rdist = kj.tooClose(Rdist)
     if((not Ldist) and (not Mdist) and (not Rdist)):
         print "fwd"
+        fwd(speed)
     elif((not Ldist) and Rdist):
         print "left"
+        left(speed)
     elif((not Rdist) and ((not Ldist and Mdist) or (Ldist and not Mdist))):
         print "right"
+        right(speed)
 
     elif((Ldist) and ((not Rdist and Mdist) or (Rdist and not Mdist))):
         print "backup, turn"
+        bwd(speed)
+        sleep(.35) # estimated as about 13cm
+        right(speed)
+        sleep(.9) # estimated as a quarter turn
     else:
         print "backup, 180"
+        bwd(speed)
+        sleep(.35) # estimated as about 13cm
+        right(speed)
+        sleep(1.8) # estimated as a half turn
 
 def fwd(dutyCycle):
     print "fwd"
@@ -59,7 +69,7 @@ def fwd(dutyCycle):
     gpio.output(R2pin,0)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
-#def fwd
+
 def bwd(dutyCycle):
     print "bwd"
     gpio.output(L1pin,1)
@@ -68,7 +78,7 @@ def bwd(dutyCycle):
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
-#def bwd
+
 def left(dutyCycle):
     # will initially do 0-radius turns
     print "left"
@@ -78,7 +88,7 @@ def left(dutyCycle):
     gpio.output(R2pin,0)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
-#def left
+
 def right(dutyCycle):
     # will initially do 0-radius turns
     print "right"
@@ -88,7 +98,7 @@ def right(dutyCycle):
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,dutyCycle,50)
     pwm.start(RpwmPin,dutyCycle,50)
-#def right
+
 def stop():
     print "stop"
     gpio.output(L1pin,1)
@@ -97,37 +107,35 @@ def stop():
     gpio.output(R2pin,1)
     pwm.start(LpwmPin,0,50)
     pwm.start(RpwmPin,0,50)
-#def stop
 
 
 # MAIN START ##############################################
-b1Pin="P9_12"
-pin1="P9_23"
+mainPin="P9_23"
+
+LpwmPin="P9_21" #h-bridge, left
+L1pin="P8_7"    #h-bridge, left
+L2pin="P8_8"    #h-bridge, left
+RpwmPin="P9_16" #h-bridge, right
+R1pin="P8_14"   #h-bridge, right
+R2pin="P8_15"   #h-bridge, right
+
+pinUP = "P8_17"
+pinDN = "P8_18"
+pinYES = "P8_19"
+
 irLPin="P9_39"  #ADC0 #note: refer to ADC still as P#_##
 irMPin="P9_40"  #ADC1
 irRPin="P9_37"  #ADC2
 enRApin="P8_3"  #encoder, right, chA
 enRBpin="P8_4"  #encoder, right, chB
-L1pin="P8_7"    #h-bridge, left
-L2pin="P8_8"    #h-bridge, left
-R1pin="P8_14"   #h-bridge, right
-R2pin="P8_15"   #h-bridge, right
-LpwmPin="P9_21" #h-bridge, left
-RpwmPin="P9_16" #h-bridge, right
-pinUP = "P8_17"
-pinDN = "P8_18"
-pinYES = "P8_19"
 
-
-prgmDone=0
-
-
+speed=70 # duty cycle
 # setting up pin directions
     # note, code replacements for ease:
     # 0 = gpio.IN, gpio.LOW
     # 1 = gpio.OUT, gpio.HIGH
-gpio.setup(pin1,0)
-gpio.add_event_detect(pin1,gpio.RISING) # end program when pressed
+gpio.setup(mainPin,0)
+gpio.add_event_detect(mainPin,gpio.RISING) # end program when pressed
 
 gpio.setup(enRApin, 0) # setup encoder inputs
 gpio.setup(enRBpin, gpio.IN)
@@ -160,14 +168,17 @@ kj.blink(0)
 # menu options can either go on top or bottom
 # sequence options must go on top
 
-
+prgmDone=0
 # MAIN LOOP ###############################################
 while(not prgmDone):
-    if gpio.event_detected(pin1):
+    if gpio.event_detected(mainPin):
         prgmDone=1
         print "Ending Program"
 
-    prgmDone = kj.LCDMenu()
+    (L,M,R) = getIR()
+    decision(L,M,R)
+
+
     # LoopTime=time.time()-prevTime
     # prevTime=time.time()
     # print LoopTime*1000
