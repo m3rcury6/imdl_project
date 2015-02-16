@@ -24,7 +24,7 @@ def getIR():
         Ldist=Ldist+kj.irReadcm (irLPin)
         Mdist=Mdist+kj.irReadcm(irMPin)
         Rdist=Rdist+kj.irReadcm(irRPin)
-        # sleep(1e-6) this whole fn takes ~40ms to do anyway
+        sleep(1e-6) # this whole fn takes ~40ms to do anyway
     Ldist=int(Ldist)
     Ldist=Ldist>>k
     Mdist=int(Mdist)
