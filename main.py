@@ -199,7 +199,7 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-     sleep(1)
+    sleep(1)
 # MAIN END ################################################
 
 gpio.cleanup()
