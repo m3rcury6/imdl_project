@@ -126,6 +126,7 @@ pinYES = "P8_19"
 irLPin="P9_39"  #ADC0 #note: refer to ADC still as P#_##
 irMPin="P9_40"  #ADC1
 irRPin="P9_37"  #ADC2
+
 enRApin="P8_3"  #encoder, right, chA
 enRBpin="P8_4"  #encoder, right, chB
 
@@ -179,9 +180,9 @@ while(not prgmDone):
     decision(L,M,R)
 
 
-    # LoopTime=time.time()-prevTime
-    # prevTime=time.time()
-    # print LoopTime*1000
+    LoopTime=time.time()-prevTime
+    prevTime=time.time()
+    print LoopTime*1000
     # sleep(1)
 # MAIN END ################################################
 
