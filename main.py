@@ -112,7 +112,7 @@ def userInput():
         if gpio.event_detected(pinYES):
             notdone=0
             choice=2
-    time.sleep(.15)
+    time.sleep(.25)
     return choice
 # MAIN START ##############################################
 b1Pin="P9_12"
@@ -173,12 +173,90 @@ kj.blink(0)
 
 # menu options can either go on top or bottom
 # sequence options must go on top
-menu0=['1. add','2. sub','3. cal','4. Run']
+menu0=['1. add','2. cal','3. Run']
 sequ1=['add-N1','add-N2','add-RES']
 sequ2=['sub-N1','sub-N2','sub-RES']
-menu3=['3a. cam','3b. IR']
+menu2=['3a. cam','3b. IR']
 sequ3a=['cam s1','cam s2']
 sequ3b=['IR s1','IR s2']
+
+
+
+def TopMenu():
+    user=0  #this will be used for selection
+    i=0     #this will be used as menu pointer
+    # TopMenu
+    while (user!=2):
+        print "Top Menu"
+        print menu0[i]
+        user=userInput()
+
+        # up/down, keep in bounds
+        if(user==0):i-=1
+        if(user==1):i+=1
+        if(i<0):i=len(menu0)-1
+        if(i>len(menu0)-1):i=0
+    return i
+
+def AddSequence():
+# AddSequence
+    i=0
+    user=0
+    n1=0
+    while(user!=2):
+        # choose n1
+        print sequ1[i]
+        print n1
+        user=userInput()
+
+        # when in sequence, user doesn't choose i
+        if(user==0):n1-=1
+        if(user==1):n1+=1
+    # choose n1
+
+    i+=1
+    user=0
+    n2=0
+    while(user!=2):
+        # choose n2
+        print sequ1[i]
+        print n2
+        user=userInput()
+
+        # when in sequence, user doesn't choose i
+        if(user==0):n2-=1
+        if(user==1):n2+=1
+    # choose n2
+    i+=1
+    print sequ1[i]
+    print n1+n2
+    userInput()
+
+def CamCalSequence():
+    print "Camera Calibration"
+    userInput()
+
+def IRCalSequence():
+    print "IR Calibration"
+    userInput()
+
+
+def CalMenu():
+# CalibrationMenu
+    i=0 #2nd level menu
+    user=0 #reset
+    while (user!=2):
+        print menu0[1]
+        print menu2[i]
+        user=userInput()
+
+        # up/down, keep in bounds
+        if(user==0):i-=1
+        if(user==1):i+=1
+        if(i<0):i=len(menu2)-1
+        if(i>len(menu0)-1):i=0
+    return i
+# def CalMenu
 
 
 
@@ -197,8 +275,7 @@ sequ3b=['IR s1','IR s2']
 
 
 # MAIN LOOP ###############################################
-i=0
-prevTime=time.time()
+
 while(not prgmDone):
     if gpio.event_detected(pin1):
         prgmDone=1
@@ -211,76 +288,31 @@ while(not prgmDone):
     # if gpio.input(pinYES):
     #     print "yes"
 
-# sample change
     # (L,M,R) = getIR()
     # decision(L,M,R)
 
     # for the moment, will now make quick options menu:
-    user=0  #this will be used for selection
-    i=0     #this will be used as menu pointer
-    # menu0
-    while (user!=2):
-        print "menu"
-        print menu0[i]
-        user=userInput()
 
-        # up/down, keep in bounds
-        if(user==0):i-=1
-        if(user==1):i+=1
-        if(i<0):i=len(menu0)-1
-        if(i>len(menu0)-1):i=0
-    # top level menu
+    option=TopMenu() # use as pointer
+    if(option==0):
+        AddSequence()
 
-    if(i==0):
-        # add menu
-        i=0
-        user=0
-        n1=0
-        while(user!=2):
-            # choose n1
-            print sequ1[i]
-            print n1
-            user=userInput()
+    elif(option==1):
+        option = CalMenu()
 
-            # when in sequence, user doesn't choose i
-            if(user==0):n1-=1
-            if(user==1):n1+=1
-        # choose n1
+        if(option==0):
+            CamCalSequence()
+        elif(option==1):
+            IRCalSequence()
 
-        i+=1
-        user=0
-        n2=0
-        while(user!=2):
-            # choose n2
-            print sequ1[i]
-            print n2
-            user=userInput()
-
-            # when in sequence, user doesn't choose i
-            if(user==0):n2-=1
-            if(user==1):n2+=1
-        # choose n2
-        i+=1
-        print
-        print n1+n2
-        userInput()
-        # give result, done
-
-    elif(i==1):
-        print "will have"
-        print "sub sequ..."
-
-    elif(i==2):
-        print "will have"
-        print "cal menu..."
-    elif(i==3):
+    elif(option==2):
         print "run robot now!"
         prgmDone=1
     else:
         # just end the program
         print "ERROR: option out of bounds, terminating"
         prgmDone=1
-    #s
+    #
 
 
 
