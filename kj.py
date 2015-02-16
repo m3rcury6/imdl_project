@@ -138,7 +138,7 @@ def slopeLinReg(xarray,yarray):
 
 # interceptLinReg #########################################
 def interceptLinReg(xarray,yarray):
-    beta=slope(xarray,yarray)
+    beta=slopeLinReg(xarray,yarray)
     xavg=avg(xarray)
     yavg=avg(yarray)
     return yavg-beta*xavg # return lin regression intercept, alpha
@@ -237,7 +237,7 @@ def irCalibrate(xarr,yarr):
 irReadVarA=-2.1485 #default value
 irReadVarB=7.4789 #default value
 def irReadcm(adcValue):
-    var1=analogRead(adcValue)/(1800.0)
+    var1=aRead(adcValue)/(1800.0)
     return irReadVarB/(var1+1e-6)+irReadVarA #calibration constants
 
 # LCDMenu #################################################
@@ -367,7 +367,7 @@ def analogRead(adcNum):
     path='/sys/devices/ocp.2/helper.14/AIN'
     a=900
     try:
-        for i in range(0,6): # try n-times
+        for i in range(0,4): # try n-times
             f=open(path+str(adcNum))
             a=f.read()
             f.close()
@@ -376,6 +376,16 @@ def analogRead(adcNum):
     except IOError as e:
         # print "kjg: IOError"
         return int(a)
+
+def aRead(adcNum):
+    a=0
+    k=3
+    for i in range(0,2**k):
+        a+=analogRead(adcNum)
+    a = a >> k
+    return a
+
+
 
 
 # end of file #############################################
