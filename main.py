@@ -112,7 +112,7 @@ def userInput():
         if gpio.event_detected(pinYES):
             notdone=0
             choice=2
-    time.sleep(.05)
+    time.sleep(.15)
     return choice
 # MAIN START ##############################################
 b1Pin="P9_12"
