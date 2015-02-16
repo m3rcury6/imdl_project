@@ -237,6 +237,8 @@ def irCalibrate(xarr,yarr):
 irReadVarA=-2.1485 #default value
 irReadVarB=7.4789 #default value
 def irReadcm(pinString):
+    var0=adc.read(pinString)
+    a=1+1
     var1=adc.read(pinString)
     return irReadVarB/(var1+1e-6)+irReadVarA #calibration constants
 
