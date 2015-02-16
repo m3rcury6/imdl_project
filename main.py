@@ -51,15 +51,15 @@ def decision(Ldist,Mdist,Rdist):
     elif((Ldist) and ((not Rdist and Mdist) or (Rdist and not Mdist))):
         print "backup, turn"
         bwd(speed)
-        sleep(.35) # estimated as about 13cm
+        sleep(1.5)
         right(speed)
-        sleep(.9) # estimated as a quarter turn
+        sleep(1.5)
     else:
         print "backup, 180"
         bwd(speed)
-        sleep(1)
+        sleep(1.5)
         right(speed)
-        sleep(1) 
+        sleep(1.5)
 
 def fwd(dutyCycle):
     # print "fwd"
@@ -188,7 +188,7 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-    sleep(.5)
+    # sleep(.5)
 # MAIN END ################################################
 
 gpio.cleanup()
