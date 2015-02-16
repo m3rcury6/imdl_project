@@ -21,10 +21,17 @@ def getIR():
     Rdist=0.0
     k=3
     for i in range(0,2**k):
-        Ldist=Ldist+kj.irReadcm (irLPin)
-        Mdist=Mdist+kj.irReadcm(irMPin)
-        Rdist=Rdist+kj.irReadcm(irRPin)
-        sleep(1e-4) # this whole fn takes ~40ms to do anyway
+        sleep(1e-4)
+        adcL=kj.irReadcm(irLPin)
+        sleep(1e-4)
+        adcM=kj.irReadcm(irMPin)
+        sleep(1e-4)
+        adcR=kj.irReadcm(irRPin)
+        sleep(1e-4)
+        Ldist=Ldist+adcL
+        Mdist=Mdist+adcM
+        Rdist=Rdist+adcR
+        sleep(1e-3) # this whole fn takes ~40ms to do anyway
     Ldist=int(Ldist)
     Ldist=Ldist>>k
     Mdist=int(Mdist)
@@ -165,7 +172,7 @@ print "Start..."
 sleep(1)
 print "Now"
 kj.blink(0)
-deathcounter=0 # death at 169 counts
+deathcounter=0 # death at 169 counts, 2 times
 # menu options can either go on top or bottom
 # sequence options must go on top
 prevTime=time.time()
