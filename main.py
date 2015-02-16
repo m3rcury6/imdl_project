@@ -144,11 +144,11 @@ gpio.output(R1pin, 0)
 gpio.output(R2pin, 0)
 
 gpio.setup(pinUP,0)
-gpio.add_event_detect(pinUP,gpio.RISING) # end program when pressed
+# gpio.add_event_detect(pinUP,gpio.RISING) # end program when pressed
 gpio.setup(pinDN,0)
-gpio.add_event_detect(pinDN,gpio.RISING) # end program when pressed
+# gpio.add_event_detect(pinDN,gpio.RISING) # end program when pressed
 gpio.setup(pinYES,0)
-gpio.add_event_detect(pinYES,gpio.RISING) # end program when pressed
+# gpio.add_event_detect(pinYES,gpio.RISING) # end program when pressed
 
 adc.setup()
 kj.ledINIT()
@@ -157,8 +157,18 @@ sleep(1)
 print "Now"
 kj.blink(0)
 
+# menu options can either go on top or bottom
+# sequence options must go on top
+menu0=['1. add','2. sub','3. cal']
+sequ1=['add-N1','add-N2','add-RES']
+sequ2=['sub-N1','sub-N2','sub-RES']
+menu3=['3a. cam','3b. IR']
+sequ3a=['cam s1','cam s2']
+sequ3b=['IR s1','IR s2']
 
-# INT LIST START ###########################
+
+
+# LATCH LIST ###############################
 # if gpio.event_detected(b1Pin):
 #     prgmDone=1
 # if gpio.event_detected(pin1):
@@ -169,7 +179,7 @@ kj.blink(0)
 # if gpio.event_detected(enRBpin):
 #     print "chB"
 
-# INT LIST END #############################
+# LATCH LIST END ###########################
 
 
 # MAIN LOOP ###############################################
@@ -180,12 +190,13 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-    if gpio.event_detected(pinUP):
+    if gpio.input(pinUP):
         print "up"
-    if gpio.event_detected(pinDN):
+    if gpio.input(pinDN):
         print "down"
-    if gpio.event_detected(pinYES):
+    if gpio.input(pinYES):
         print "yes"
+
 # sample change
     # (L,M,R) = getIR()
     # decision(L,M,R)
