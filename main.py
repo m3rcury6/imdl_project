@@ -262,7 +262,6 @@ def LCDMenu():
             if(i==len(menu2)):i=0
         return i
 
-
     option=TopMenu() # use as pointer
     if(option==0):
         AddSequence()
@@ -274,11 +273,11 @@ def LCDMenu():
             IRCalSequence()
     elif(option==2):
         print "run robot now!"
-        prgmDone=1
+        return 1
     else:
         # just end the program
         print "ERROR: option out of bounds, terminating"
-        prgmDone=1
+        return 1
 
 
 
@@ -318,8 +317,7 @@ while(not prgmDone):
     # decision(L,M,R)
 
     # for the moment, will now make quick options menu:
-
-    LCDMenu()
+    prgmDone = LCDMenu()
 
 
     #
