@@ -189,18 +189,18 @@ while(not prgmDone):
 
 
     L=kj.analogRead(0)
-    print L
+    M=kj.analogRead(1)
+    R=kj.analogRead(2)
+    print L,M,R
 
     LoopTime=time.time()-prevTime
     prevTime=time.time()
     deathcounter+=1
     print deathcounter, LoopTime*1000
-
+    # sleep(1)
     if gpio.event_detected(mainPin):
         prgmDone=1
         print "Ending Program"
-
-    sleep(1)
 # MAIN END ################################################
 
 gpio.cleanup()
