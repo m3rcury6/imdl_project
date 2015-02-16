@@ -168,7 +168,7 @@ kj.blink(0)
 
 # menu options can either go on top or bottom
 # sequence options must go on top
-
+prevTime=time.time()
 prgmDone=0
 # MAIN LOOP ###############################################
 while(not prgmDone):
