@@ -219,20 +219,70 @@ while(not prgmDone):
     print "starting..."
     user=0
     i=0 #this will be used as top level pointer
+
+
+    # menu0
     while (user!=2):
         print "menu"
         print menu0[i]
         user=userInput()
-        print user
-        # if user chooses to go up or down
-        if(user==0):i=i-1
-        if(user==1):i=i+1
 
-        #ensure pointer is within menu options
+        # up/down, keep in bounds
+        if(user==0):i-=1
+        if(user==1):i+=1
         if(i<0):len(menu0)-1
         if(i>len(menu0)-1):i=0
     # top level menu
-    print "you've made a choice!"
+
+    if(i==0):
+        # add menu
+        i=0
+        user=0
+        n1=0
+        while(user!=2):
+            # choose n1
+            print sequ1[i]
+            print n1
+            user=userInput()
+
+            # when in sequence, user doesn't choose i
+            if(user==0):n1-=1
+            if(user==1):n1+=1
+        # choose n1
+
+        i+=1
+        user=0
+        n2=0
+        while(user!=2):
+            # choose n2
+            print sequ1[i]
+            print n2
+            user=userInput()
+
+            # when in sequence, user doesn't choose i
+            if(user==0):n2-=1
+            if(user==1):n2+=1
+        # choose n2
+        i+=1
+        print
+        print n1+n2
+        # give result, done
+
+    elif(i==1):
+        print "will have"
+        print "sub sequ..."
+
+    elif(i==2):
+        print "will have"
+        print "cal menu..."
+
+    else:
+        # just end the program
+        print "ERROR: option out of bounds, terminating"
+        prgmDone=1
+    #s
+
+
 
     # LoopTime=time.time()-prevTime
     # prevTime=time.time()
