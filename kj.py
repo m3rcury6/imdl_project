@@ -360,25 +360,18 @@ def LCDMenu():
 def analogRead(adcNum):
     path='/sys/devices/ocp.2/helper.14/AIN'
     # first try, error here
-    f=open(path+str(adcNum))
-    a=f.read()
-    f.close()
-    # 2nd try
-    f=open(path+str(adcNum))
-    a=f.read()
-    f.close()
-    # 3rd try
-    f=open(path+str(adcNum))
-    a=f.read()
-    f.close()
-    # 4th try, now it should be updated (error in driver)
-    f=open(path+str(adcNum))
-    a=f.read()
-    f.close()
 
-    a=a[0:len(a)-1]
-    return int(a)
-
+    a=900
+    try:
+        for i in range(0,6): # try n-times
+            f=open(path+str(adcNum))
+            a=f.read()
+            f.close()
+        a=a[0:len(a)-1]
+        return int(a)
+    except IOError as e:
+        print "kjg: IOError"
+        return a
 
 
 
