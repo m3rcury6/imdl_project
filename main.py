@@ -74,8 +74,14 @@ def fwd(dutyCycle):
     gpio.output(L2pin,1)
     gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
     gpio.output(R2pin,0)
-    pwm.start(LpwmPin,dutyCycle,50)
-    pwm.start(RpwmPin,dutyCycle,50)
+    try:
+        pwm.start(LpwmPin,dutyCycle,50)
+    except IOError as e:
+        print "KJG: pwm error"
+    try:
+        pwm.start(RpwmPin,dutyCycle,50)
+    except IOError as e:
+        print "KJG: pwm error"
 
 def bwd(dutyCycle):
     # print "bwd"
@@ -83,8 +89,14 @@ def bwd(dutyCycle):
     gpio.output(L2pin,0)
     gpio.output(R1pin,0)
     gpio.output(R2pin,1)
-    pwm.start(LpwmPin,dutyCycle,50)
-    pwm.start(RpwmPin,dutyCycle,50)
+    try:
+        pwm.start(LpwmPin,dutyCycle,50)
+    except IOError as e:
+        print "KJG: pwm error"
+    try:
+        pwm.start(RpwmPin,dutyCycle,50)
+    except IOError as e:
+        print "KJG: pwm error"
 
 def left(dutyCycle):
     # will initially do 0-radius turns
@@ -93,8 +105,14 @@ def left(dutyCycle):
     gpio.output(L2pin,0)
     gpio.output(R1pin,1)
     gpio.output(R2pin,0)
-    pwm.start(LpwmPin,dutyCycle,50)
-    pwm.start(RpwmPin,dutyCycle,50)
+    try:
+        pwm.start(LpwmPin,dutyCycle,50)
+    except IOError as e:
+        print "KJG: pwm error"
+    try:
+        pwm.start(RpwmPin,dutyCycle,50)
+    except IOError as e:
+        print "KJG: pwm error"
 
 def right(dutyCycle):
     # will initially do 0-radius turns
@@ -103,8 +121,14 @@ def right(dutyCycle):
     gpio.output(L2pin,1)
     gpio.output(R1pin,0)
     gpio.output(R2pin,1)
-    pwm.start(LpwmPin,dutyCycle,50)
-    pwm.start(RpwmPin,dutyCycle,50)
+    try:
+        pwm.start(LpwmPin,dutyCycle,50)
+    except IOError as e:
+        print "KJG: pwm error"
+    try:
+        pwm.start(RpwmPin,dutyCycle,50)
+    except IOError as e:
+        print "KJG: pwm error"
 
 def stop():
     # print "stop"
@@ -112,8 +136,14 @@ def stop():
     gpio.output(L2pin,1)
     gpio.output(R1pin,1)
     gpio.output(R2pin,1)
-    pwm.start(LpwmPin,0,50)
-    pwm.start(RpwmPin,0,50)
+    try:
+        pwm.start(LpwmPin,0,50)
+    except IOError as e:
+        print "KJG: pwm error"
+    try:
+        pwm.start(RpwmPin,0,50)
+    except IOError as e:
+        print "KJG: pwm error"
 
 
 # MAIN START ##############################################
@@ -129,6 +159,7 @@ R2pin="P8_15"   #h-bridge, right
 pinUP = "P8_17"
 pinDN = "P8_18"
 pinYES = "P8_19"
+# THESE PINS ARE ALSO WRITTEN IN KJ.PY
 
 irLPin=0 #"P9_39" #blue
 irMPin=1 #"P9_40" #black

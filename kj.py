@@ -1,4 +1,4 @@
-import Adafruit_BBIO.ADC as adc
+import Adafruit_BBIO.GPIO as gpio
 import time
 
 # avg #####################################################
@@ -248,6 +248,11 @@ def LCDMenu():
     menu2=['3a. cam','3b. IR']
     sequ3a=['cam s1','cam s2']
     sequ3b=['IR s1','IR s2']
+
+    pinUP = "P8_17"
+    pinDN = "P8_18"
+    pinYES = "P8_19"
+
 
     def userInput():
         notdone=1
