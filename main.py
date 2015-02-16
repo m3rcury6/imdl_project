@@ -215,19 +215,29 @@ while(not prgmDone):
     # decision(L,M,R)
 
     # for the moment, will now make quick options menu:
-    print "please select option: "
-    print '''
-    1. add
-    2. subtract
-    3. calibrate
-    '''
-    user=userInput()
-    print user
+    print "starting..."
 
-    LoopTime=time.time()-prevTime
-    prevTime=time.time()
-    print LoopTime*1000
-    sleep(1)
+    i=0 #this will be used as top level pointer
+    while (user!=2):
+        print "menu"
+        print menu0[i]
+        user=userinput()
+        print user
+
+        # if user chooses to go up or down
+        if(user==0):i=i-1
+        if(user==1):i=i+1
+
+        #ensure pointer is within menu options
+        if(i<0):len(menu0)-1
+        if(i>len(menu0)-1):i=0
+    # top level menu
+    print "you've made a choice!"
+
+    # LoopTime=time.time()-prevTime
+    # prevTime=time.time()
+    # print LoopTime*1000
+    # sleep(1)
 # MAIN END ################################################
 
 gpio.cleanup()
