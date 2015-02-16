@@ -183,7 +183,7 @@ while(not prgmDone):
     LoopTime=time.time()-prevTime
     prevTime=time.time()
     print LoopTime*1000
-    # sleep(1)
+    sleep(.5)
 # MAIN END ################################################
 
 gpio.cleanup()
