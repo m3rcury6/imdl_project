@@ -3,7 +3,6 @@ import Adafruit_BBIO.ADC as adc
 import Adafruit_BBIO.PWM as pwm
 import time
 sleep = time.sleep
-pinRead = gpio.input
 import kj
 gpio.cleanup()
 pwm.cleanup()
@@ -128,7 +127,7 @@ prgmDone=0
     # 0 = gpio.IN, gpio.LOW
     # 1 = gpio.OUT, gpio.HIGH
 gpio.setup(pin1,0)
-gpio.add_event_detect(pin1,gpio.RISING) # flash LED when pressed
+gpio.add_event_detect(pin1,gpio.RISING) # end program when pressed
 
 gpio.setup(enRApin, 0) # setup encoder inputs
 gpio.setup(enRBpin, gpio.IN)
@@ -145,9 +144,11 @@ gpio.output(R1pin, 0)
 gpio.output(R2pin, 0)
 
 gpio.setup(pinUP,0)
+gpio.add_event_detect(pinUP,gpio.RISING) # end program when pressed
 gpio.setup(pinDN,0)
+gpio.add_event_detect(pinDN,gpio.RISING) # end program when pressed
 gpio.setup(pinYES,0)
-
+gpio.add_event_detect(pinYES,gpio.RISING) # end program when pressed
 
 adc.setup()
 kj.ledINIT()
@@ -179,18 +180,19 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
+    if(gpio.input(pinUP)):
+        print "up"
+    if(gpio.input(pinDN)):
+        print "down"
+    if(gpio.input(pinYES)):
+        print "yes"
+
     # (L,M,R) = getIR()
     # decision(L,M,R)
 
     # for the moment, will now make quick options menu:
-    print "lala"
 
-    if(pinRead(pinUP)):
-        print "up"
-    elif(pinRead(pinDN)):
-        print "down"
-    elif(pinRead(pinYES)):
-        print "yes"
+
 
     LoopTime=time.time()-prevTime
     prevTime=time.time()
