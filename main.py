@@ -172,17 +172,17 @@ def userInput():
     notdone=1
     choice=3
     while(notdone):
-        if gpio.event_detected(pinUP):
+        if gpio.input(pinUP):
             notdone=0
             choice=0
-        if gpio.event_detected(pinDN):
+        if gpio.input(pinDN):
             notdone=0
             choice=1
-        if gpio.event_detected(pinYES):
+        if gpio.input(pinYES):
             notdone=0
             choice=2
         time.sleep(.1)
-    time.sleep(.1)
+    time.sleep(.2)
     return choice
 
 def TopMenu():
