@@ -173,7 +173,7 @@ kj.blink(0)
 
 # menu options can either go on top or bottom
 # sequence options must go on top
-menu0=['1. add','2. sub','3. cal']
+menu0=['1. add','2. sub','3. cal','4. Run']
 sequ1=['add-N1','add-N2','add-RES']
 sequ2=['sub-N1','sub-N2','sub-RES']
 menu3=['3a. cam','3b. IR']
@@ -216,11 +216,8 @@ while(not prgmDone):
     # decision(L,M,R)
 
     # for the moment, will now make quick options menu:
-    print "starting..."
-    user=0
-    i=0 #this will be used as top level pointer
-
-
+    user=0  #this will be used for selection
+    i=0     #this will be used as menu pointer
     # menu0
     while (user!=2):
         print "menu"
@@ -266,6 +263,7 @@ while(not prgmDone):
         i+=1
         print
         print n1+n2
+        userInput()
         # give result, done
 
     elif(i==1):
@@ -275,7 +273,9 @@ while(not prgmDone):
     elif(i==2):
         print "will have"
         print "cal menu..."
-
+    elif(i==3):
+        print "run robot now!"
+        prgmDone=1
     else:
         # just end the program
         print "ERROR: option out of bounds, terminating"
