@@ -130,9 +130,9 @@ pinUP = "P8_17"
 pinDN = "P8_18"
 pinYES = "P8_19"
 
-irLPin=0 #"P9_39"  #ADC0 #note: refer to ADC still as P#_##
-irMPin=1 #"P9_40"  #ADC1
-irRPin=2 #"P9_37"  #ADC2
+irLPin=0 #"P9_39" #blue
+irMPin=1 #"P9_40" #black
+irRPin=2 #"P9_37" #white
 
 enRApin="P8_3"  #encoder, right, chA
 enRBpin="P8_4"  #encoder, right, chB
@@ -193,15 +193,16 @@ while(not prgmDone):
     # R=kj.analogRead(2)
     # print L,M,R
 
-    # LoopTime=time.time()-prevTime
-    # prevTime=time.time()
-    # deathcounter+=1
-    # print deathcounter, LoopTime*1000
-    sleep(1)
+    LoopTime=time.time()-prevTime
+    prevTime=time.time()
+    deathcounter+=1
+    print deathcounter, LoopTime*1000
+    # sleep(1)
     if gpio.event_detected(mainPin):
         prgmDone=1
         print "Ending Program"
 # MAIN END ################################################
+
 
 gpio.cleanup()
 pwm.cleanup()
