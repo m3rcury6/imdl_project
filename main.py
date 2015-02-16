@@ -195,7 +195,7 @@ def TopMenu():
         if(user==0):i-=1
         if(user==1):i+=1
         if(i<0):i=len(menu0)-1
-        if(i>len(menu0)-1):i=0
+        if(i==len(menu0)):i=0
     return i
 
 def AddSequence():
@@ -254,7 +254,7 @@ def CalMenu():
         if(user==0):i-=1
         if(user==1):i+=1
         if(i<0):i=len(menu2)-1
-        if(i>len(menu0)-1):i=0
+        if(i==len(menu2)):i=0
     return i
 # def CalMenu
 
