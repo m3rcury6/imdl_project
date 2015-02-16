@@ -103,13 +103,13 @@ def userInput():
     notdone=1
     choice=3
     while(notdone):
-        if gpio.input(pinUP):
+        if gpio.event_detected(pinUP):
             notdone=0
             choice=0
-        if gpio.input(pinDN):
+        if gpio.event_detected(pinDN):
             notdone=0
             choice=1
-        if gpio.input(pinYES):
+        if gpio.event_detected(pinYES):
             notdone=0
             choice=2
     return choice
@@ -157,11 +157,11 @@ gpio.output(R1pin, 0)
 gpio.output(R2pin, 0)
 
 gpio.setup(pinUP,0)
-# gpio.add_event_detect(pinUP,gpio.RISING) # end program when pressed
+gpio.add_event_detect(pinUP,gpio.RISING) # end program when pressed
 gpio.setup(pinDN,0)
-# gpio.add_event_detect(pinDN,gpio.RISING) # end program when pressed
+gpio.add_event_detect(pinDN,gpio.RISING) # end program when pressed
 gpio.setup(pinYES,0)
-# gpio.add_event_detect(pinYES,gpio.RISING) # end program when pressed
+gpio.add_event_detect(pinYES,gpio.RISING) # end program when pressed
 
 adc.setup()
 kj.ledINIT()
@@ -223,7 +223,6 @@ while(not prgmDone):
         print menu0[i]
         user=userInput()
         print user
-
         # if user chooses to go up or down
         if(user==0):i=i-1
         if(user==1):i=i+1
