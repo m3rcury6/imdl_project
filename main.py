@@ -114,9 +114,9 @@ R1pin="P8_14"   #h-bridge, right
 R2pin="P8_15"   #h-bridge, right
 LpwmPin="P9_21" #h-bridge, left
 RpwmPin="P9_16" #h-bridge, right
-pinUP = "P8_20"
-pinDN = "P8_22"
-pinYES = "P8_24"
+pinUP = "P8_17"
+pinDN = "P8_18"
+pinYES = "P8_19"
 
 
 prgmDone=0
