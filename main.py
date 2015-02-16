@@ -99,7 +99,20 @@ def stop():
     pwm.start(RpwmPin,0,50)
 #def stop
 
-
+def userInput():
+    notdone=1
+    choice=3
+    while(notdone):
+        if gpio.input(pinUP):
+            notdone=0
+            choice=0
+        if gpio.input(pinDN):
+            notdone=0
+            choice=1
+        if gpio.input(pinYES):
+            notdone=0
+            choice=2
+    return choice
 # MAIN START ##############################################
 b1Pin="P9_12"
 pin1="P9_23"
@@ -190,20 +203,26 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-    if gpio.input(pinUP):
-        print "up"
-    if gpio.input(pinDN):
-        print "down"
-    if gpio.input(pinYES):
-        print "yes"
+    # if gpio.input(pinUP):
+    #     print "up"
+    # if gpio.input(pinDN):
+    #     print "down"
+    # if gpio.input(pinYES):
+    #     print "yes"
 
 # sample change
     # (L,M,R) = getIR()
     # decision(L,M,R)
 
     # for the moment, will now make quick options menu:
-
-
+    print "please select option: "
+    print '''
+    1. add
+    2. subtract
+    3. calibrate
+    '''
+    user=userInput()
+    print user
 
     LoopTime=time.time()-prevTime
     prevTime=time.time()
