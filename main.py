@@ -193,10 +193,10 @@ while(not prgmDone):
     R=kj.analogRead(2)
     print L,M,R
 
-    LoopTime=time.time()-prevTime
-    prevTime=time.time()
-    deathcounter+=1
-    print deathcounter, LoopTime*1000
+    # LoopTime=time.time()-prevTime
+    # prevTime=time.time()
+    # deathcounter+=1
+    # print deathcounter, LoopTime*1000
     sleep(1)
     if gpio.event_detected(mainPin):
         prgmDone=1
