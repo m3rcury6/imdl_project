@@ -370,7 +370,7 @@ def analogRead(adcNum):
         return int(a)
     except IOError as e:
         print "kjg: IOError"
-        return a
+        return int(a)
 
 
 print ""

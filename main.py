@@ -183,10 +183,12 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-    (L,M,R) = getIR()
-    print L,M,R
+    # (L,M,R) = getIR()
+    # print L,M,R
     # decision(L,M,R)
 
+
+    L=kj.analogRead(0)
 
     LoopTime=time.time()-prevTime
     prevTime=time.time()
@@ -197,7 +199,7 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-     # sleep(.5)
+     sleep(1)
 # MAIN END ################################################
 
 gpio.cleanup()
