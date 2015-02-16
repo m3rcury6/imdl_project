@@ -186,7 +186,7 @@ while(not prgmDone):
         print "down"
     if(gpio.input(pinYES)):
         print "yes"
-
+# sample change
     # (L,M,R) = getIR()
     # decision(L,M,R)
 
