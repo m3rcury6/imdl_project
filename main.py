@@ -184,7 +184,8 @@ while(not prgmDone):
         print "Ending Program"
 
     (L,M,R) = getIR()
-    decision(L,M,R)
+    print L,M,R
+    # decision(L,M,R)
 
 
     LoopTime=time.time()-prevTime
