@@ -24,7 +24,7 @@ def getIR():
         Ldist=Ldist+kj.irReadcm (irLPin)
         Mdist=Mdist+kj.irReadcm(irMPin)
         Rdist=Rdist+kj.irReadcm(irRPin)
-        sleep(1e-6) # this whole fn takes ~40ms to do anyway
+        sleep(1e-4) # this whole fn takes ~40ms to do anyway
     Ldist=int(Ldist)
     Ldist=Ldist>>k
     Mdist=int(Mdist)
@@ -165,7 +165,7 @@ print "Start..."
 sleep(1)
 print "Now"
 kj.blink(0)
-deathcounter=0
+deathcounter=0 # death at 169 counts
 # menu options can either go on top or bottom
 # sequence options must go on top
 prevTime=time.time()
@@ -189,7 +189,7 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-    # sleep(.5)
+     # sleep(.5)
 # MAIN END ################################################
 
 gpio.cleanup()
