@@ -184,8 +184,8 @@ while(not prgmDone):
         print "Ending Program"
 
     (L,M,R) = getIR()
-    print L,M,R
-    # decision(L,M,R)
+    # print L,M,R
+    decision(L,M,R)
 
 
     # L=kj.analogRead(0)
