@@ -3,9 +3,8 @@ import Adafruit_BBIO.ADC as adc
 import Adafruit_BBIO.PWM as pwm
 import time
 sleep = time.sleep
-
+pinRead = gpio.input
 import kj
-a=time.time()
 gpio.cleanup()
 pwm.cleanup()
 
@@ -16,43 +15,6 @@ plan to get this code on track for OA:
 2. get manual motor commands working
 3. link IR to adjustment in motor comm
 '''
-
-def USELESS_calibrate():
-    print "old ir cal values: "
-    print kj.irReadVarA,kj.irReadVarB
-
-
-    a=range(10,90,10)
-    b=range(0,len(a))
-
-    for j in range(0,len(a)):
-        kjgstr="press enter to save ADC @",a[j],"cm"
-        raw_input(kjgstr)
-        for i in range(0,10):
-            sleep(.2)
-            b[j]=b[j]+adc.read(irMPin)
-        b[j]=b[j]/10.0
-        sleep(.1)
-
-
-    print "saved values (a,b):"
-    print a
-    print b
-    sleep(2)
-    print "calibrating ir..."
-    # print kj.irCalibrate(a,b)
-    (kj.irReadVarA,kj.irReadVarB)=kj.irCalibrate(a,b)
-    print "new IR values: "
-    print kj.irReadVarA,kj.irReadVarB
-    # L=adc.read(irLPin)
-
-    # R=adc.read(irRPin)
-    # ir1=kj.irReadcm(irLPin)
-    # ir2=kj.irReadcm(irMPin)
-    # ir3=kj.irReadcm(ir3Pin)
-    # print L, M, R
-    # print M
-#def USELESS_calibrate
 
 def getIR():
     L=0.0
@@ -72,6 +34,23 @@ def getIR():
     R=R>>k
     return (L,M,R)
 #def printIR
+
+def decision(Ldist,Mdist,Rdist):
+
+    Ldist = kj.tooClose(Ldist)
+    Mdist = kj.tooClose(Mdist)
+    Rdist = kj.tooClose(Rdist)
+    if((not Ldist) and (not Mdist) and (not Rdist)):
+        print "fwd"
+    elif((not Ldist) and Rdist):
+        print "left"
+    elif((not Rdist) and ((not Ldist and Mdist) or (Ldist and not Mdist))):
+        print "right"
+
+    elif((Ldist) and ((not Rdist and Mdist) or (Rdist and not Mdist))):
+        print "backup, turn"
+    else:
+        print "backup, 180"
 
 def fwd(dutyCycle):
     print "fwd"
@@ -121,9 +100,10 @@ def stop():
     pwm.start(RpwmPin,0,50)
 #def stop
 
+
 # MAIN START ##############################################
 b1Pin="P9_12"
-b2Pin="P9_23"
+pin1="P9_23"
 irLPin="P9_39"  #ADC0 #note: refer to ADC still as P#_##
 irMPin="P9_40"  #ADC1
 irRPin="P9_37"  #ADC2
@@ -135,6 +115,9 @@ R1pin="P8_14"   #h-bridge, right
 R2pin="P8_15"   #h-bridge, right
 LpwmPin="P9_21" #h-bridge, left
 RpwmPin="P9_16" #h-bridge, right
+pinUP = "P8_20"
+pinDN = "P8_22"
+pinYES = "P8_24"
 
 
 prgmDone=0
@@ -144,10 +127,8 @@ prgmDone=0
     # note, code replacements for ease:
     # 0 = gpio.IN, gpio.LOW
     # 1 = gpio.OUT, gpio.HIGH
-gpio.setup(b1Pin,0) # set up input buttons
-gpio.setup(b2Pin,0)
-gpio.add_event_detect(b1Pin,gpio.RISING) # pause when pressed
-gpio.add_event_detect(b2Pin,gpio.RISING) # flash LED when pressed
+gpio.setup(pin1,0)
+gpio.add_event_detect(pin1,gpio.RISING) # flash LED when pressed
 
 gpio.setup(enRApin, 0) # setup encoder inputs
 gpio.setup(enRBpin, gpio.IN)
@@ -163,6 +144,11 @@ gpio.output(L2pin, 0)
 gpio.output(R1pin, 0)
 gpio.output(R2pin, 0)
 
+gpio.setup(pinUP,0)
+gpio.setup(pinDN,0)
+gpio.setup(pinYES,0)
+
+
 adc.setup()
 kj.ledINIT()
 print "Start..."
@@ -172,80 +158,45 @@ kj.blink(0)
 
 
 # INT LIST START ###########################
-if gpio.event_detected(b1Pin):
-    prgmDone=1
-if gpio.event_detected(b2Pin):
-    print "Flash LED"
-
-if gpio.event_detected(enRApin):
-    print "chA"
-if gpio.event_detected(enRBpin):
-    print "chB"
+# if gpio.event_detected(b1Pin):
+#     prgmDone=1
+# if gpio.event_detected(pin1):
+#     print "Flash LED"
+#
+# if gpio.event_detected(enRApin):
+#     print "chA"
+# if gpio.event_detected(enRBpin):
+#     print "chB"
 
 # INT LIST END #############################
 
 
-# MAIN START ##############################################
-
-
-
-
 # MAIN LOOP ###############################################
 i=0
-c=time.time()
+prevTime=time.time()
 while(not prgmDone):
-    if gpio.event_detected(enRApin):
-        print "chA"
-    if gpio.event_detected(enRBpin):
-        print "chB"
-    if gpio.event_detected(b2Pin):
+    if gpio.event_detected(pin1):
         prgmDone=1
         print "Ending Program"
 
-    (L,M,R) = getIR()
+    # (L,M,R) = getIR()
+    # decision(L,M,R)
 
-    L = kj.tooClose(L)
-    M = kj.tooClose(M)
-    R = kj.tooClose(R)
+    # for the moment, will now make quick options menu:
+    print "lala"
 
-    if((not L) and (not M) and (not R)):
-        print "fwd"
-    elif((not L) and R):
-        print "left"
-    elif((not R) and ((not L and M) or (L and not M))):
-        print "right"
+    if(pinRead(pinUP)):
+        print "up"
+    elif(pinRead(pinDN)):
+        print "down"
+    elif(pinRead(pinYES)):
+        print "yes"
 
-    elif((L) and ((not R and M) or (R and not M))):
-        print "backup, turn"
-    else:
-        print "backup, 180"
-
-
-
-    a=time.time()-c
-    c=time.time()
-    print L,M,R, a*1000
-
-    sleep(.5)
-
-
-    #read in an ADC value.
-    #if button is pressed, ask for user input
-
-#    if(ir1>100): ir1 = 100 # help stop garbage data
-
+    LoopTime=time.time()-prevTime
+    prevTime=time.time()
+    print LoopTime*1000
+    sleep(1)
 # MAIN END ################################################
-#
-# while(0):
-#     # next portion:
-#     L = tooClose(L)
-#     M = tooClose(M)
-#     R = tooClose(R)
-#
-#     #now do stuff based on what you know:
-
-#
-
 
 gpio.cleanup()
 pwm.cleanup()
