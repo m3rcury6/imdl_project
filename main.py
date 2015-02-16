@@ -189,6 +189,7 @@ while(not prgmDone):
 
 
     L=kj.analogRead(0)
+    print L
 
     LoopTime=time.time()-prevTime
     prevTime=time.time()
