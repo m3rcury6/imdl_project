@@ -216,12 +216,12 @@ while(not prgmDone):
 
     # for the moment, will now make quick options menu:
     print "starting..."
-
+    user=0
     i=0 #this will be used as top level pointer
     while (user!=2):
         print "menu"
         print menu0[i]
-        user=userinput()
+        user=userInput()
         print user
 
         # if user chooses to go up or down
