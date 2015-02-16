@@ -180,11 +180,11 @@ while(not prgmDone):
         prgmDone=1
         print "Ending Program"
 
-    if(gpio.input(pinUP)):
+    if gpio.event_detected(pinUP):
         print "up"
-    if(gpio.input(pinDN)):
+    if gpio.event_detected(pinDN):
         print "down"
-    if(gpio.input(pinYES)):
+    if gpio.event_detected(pinYES):
         print "yes"
 # sample change
     # (L,M,R) = getIR()
