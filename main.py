@@ -230,7 +230,7 @@ while(not prgmDone):
         # up/down, keep in bounds
         if(user==0):i-=1
         if(user==1):i+=1
-        if(i<0):len(menu0)-1
+        if(i<0):i=len(menu0)-1
         if(i>len(menu0)-1):i=0
     # top level menu
 
