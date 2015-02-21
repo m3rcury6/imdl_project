@@ -378,6 +378,7 @@ def analogRead(adcNum):
         return int(a)
 
 def aRead(adcNum):
+
     a=0
     k=3
     for i in range(0,2**k):

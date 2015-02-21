@@ -79,9 +79,6 @@ def bwd(dutyCycle):
     except IOError as e:
         print "KJG: pwm error"
 
-
-
-
 def left(dutyCycle):
     # will initially do 0-radius turns
     # print "left"
@@ -187,12 +184,9 @@ pwm.start(RpwmPin,0,50)
 
 
 
-
-print "Start..."
 sleep(1)
-print "Now"
+print "Start"
 kj.blink(0)
-deathcounter=0 # death at 169 counts, 2 times
 # menu options can either go on top or bottom
 # sequence options must go on top
 prevTime=time.time()
@@ -202,19 +196,19 @@ while(not prgmDone):
     if gpio.event_detected(mainPin):
         prgmDone=1
         # print "Ending Program"
-
-    (L,M,R) = getIR()
-    # print L,M,R
-    decision(L,M,R)
-
-
-
-    LoopTime=time.time()-prevTime
-    prevTime=time.time()
-    print int(LoopTime*1000)
-    if gpio.event_detected(mainPin):
-        prgmDone=1
-        # print "Ending Program"
+    #
+    # (L,M,R) = getIR()
+    # # print L,M,R
+    # decision(L,M,R)
+    #
+    #
+    #
+    # LoopTime=time.time()-prevTime
+    # prevTime=time.time()
+    # print int(LoopTime*1000)
+    # if gpio.event_detected(mainPin):
+    #     prgmDone=1
+    #     # print "Ending Program"
 # MAIN END ################################################
 
 
