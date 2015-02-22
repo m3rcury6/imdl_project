@@ -203,9 +203,9 @@ kj.blink(0)
 prevTime=time.time()
 prgmDone=0
 # MAIN LOOP ###############################################
-while(not prgmDone):
-    if gpio.event_detected(mainPin):
-        prgmDone=1
+while(1):
+    # if gpio.event_detected(mainPin):
+    #     pause()
 
     (L,M,R) = getIR()
     print L,M,R
@@ -218,12 +218,10 @@ while(not prgmDone):
     prevTime=time.time()
     print int(LoopTime*1000)
     if gpio.event_detected(mainPin):
-        prgmDone=1
+        pause()
         # print "Ending Program"
 # MAIN END ################################################
 
-
-pause()
 
 gpio.cleanup()
 pwm.cleanup()
