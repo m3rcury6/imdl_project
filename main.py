@@ -201,10 +201,13 @@ while(not prgmDone):
     # decision(L,M,R)
 
     fwd(speed)
+    print "fwd"
     sleep(1)
     bwd(speed)
+    print "bwd"
     sleep(1)
     stop()
+    print "stop"
     sleep(1)
 
 
