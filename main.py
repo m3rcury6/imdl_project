@@ -132,7 +132,7 @@ def pause():
     while(not pauseDone):
         print "."
         sleep(.2)
-        if gpio.event_detected(mainPin):
+        if gpio.input(mainPin):
             pauseDone=1
             print "returning..."
 
