@@ -196,12 +196,19 @@ while(not prgmDone):
     if gpio.event_detected(mainPin):
         prgmDone=1
 
-    (L,M,R) = getIR()
-    print L,M,R
+    # (L,M,R) = getIR()
+    # print L,M,R
     # decision(L,M,R)
-    #
-    #
-    #
+
+    fwd(speed)
+    sleep(1)
+    bwd(speed)
+    sleep(1)
+    stop()
+    sleep(1)
+
+
+
     LoopTime=time.time()-prevTime
     prevTime=time.time()
     print int(LoopTime*1000)
