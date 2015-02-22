@@ -126,6 +126,17 @@ def stop():
     except IOError as e:
         print "KJG: pwm error"
 
+def pause():
+    pauseDone=0
+    while(not pauseDone):
+        print "."
+        sleep(1)
+        if gpio.event_detected(mainPin):
+            pauseDone=1
+
+
+
+
 # MAIN START ##############################################
 mainPin="P9_23"
 
@@ -211,6 +222,8 @@ while(not prgmDone):
         # print "Ending Program"
 # MAIN END ################################################
 
+
+pause()
 
 gpio.cleanup()
 pwm.cleanup()
