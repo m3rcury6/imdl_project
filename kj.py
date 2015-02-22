@@ -234,11 +234,13 @@ def irCalibrate(xarr,yarr):
   return (a,b)
 
 # irReadcm ################################################
-irReadVarA=-2.1485 #default value
-irReadVarB=7.4789 #default value
+# irReadVarA=-2.1485 #default value
+# irReadVarB=7.4789 #default value
+irReadVarA=-215 #default value
+irReadVarB=748 #default value
 def irReadcm(adcValue):
     var1=aRead(adcValue)/(1800.0)
-    return irReadVarB/(var1+1e-6)+irReadVarA #calibration constants
+    return irReadVarB/((var1)*100)+irReadVarA/100 #calibration constants
 
 # LCDMenu #################################################
 def LCDMenu():
