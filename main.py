@@ -195,10 +195,9 @@ prgmDone=0
 while(not prgmDone):
     if gpio.event_detected(mainPin):
         prgmDone=1
-        # print "Ending Program"
-    #
-    # (L,M,R) = getIR()
-    # # print L,M,R
+    
+    (L,M,R) = getIR()
+    print L,M,R
     # decision(L,M,R)
     #
     #
@@ -206,9 +205,9 @@ while(not prgmDone):
     # LoopTime=time.time()-prevTime
     # prevTime=time.time()
     # print int(LoopTime*1000)
-    # if gpio.event_detected(mainPin):
-    #     prgmDone=1
-    #     # print "Ending Program"
+    if gpio.event_detected(mainPin):
+        prgmDone=1
+        # print "Ending Program"
 # MAIN END ################################################
 
 
