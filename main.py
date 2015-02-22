@@ -129,7 +129,7 @@ def stop():
 # MAIN START ##############################################
 mainPin="P9_23"
 
-LpwmPin="P9_21" #h-bridge, left
+LpwmPin="P9_21"  #h-bridge, left
 L1pin="P8_7"    #h-bridge, left
 L2pin="P8_8"    #h-bridge, left
 RpwmPin="P9_16" #h-bridge, right
@@ -195,16 +195,16 @@ prgmDone=0
 while(not prgmDone):
     if gpio.event_detected(mainPin):
         prgmDone=1
-    
+
     (L,M,R) = getIR()
     print L,M,R
     # decision(L,M,R)
     #
     #
     #
-    # LoopTime=time.time()-prevTime
-    # prevTime=time.time()
-    # print int(LoopTime*1000)
+    LoopTime=time.time()-prevTime
+    prevTime=time.time()
+    print int(LoopTime*1000)
     if gpio.event_detected(mainPin):
         prgmDone=1
         # print "Ending Program"
