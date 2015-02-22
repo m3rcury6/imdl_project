@@ -128,11 +128,15 @@ def stop():
 
 def pause():
     pauseDone=0
+    sleep(1)
     while(not pauseDone):
         print "."
-        sleep(1)
+        sleep(.2)
         if gpio.event_detected(mainPin):
             pauseDone=1
+            print "returning..."
+
+    sleep(1)
 
 
 
