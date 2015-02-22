@@ -238,7 +238,7 @@ irReadVarA=-2.1485 #default value
 irReadVarB=7.4789 #default value
 def irReadcm(adcValue):
     var1=aRead(adcValue)/(1800.0)
-    return irReadVarB/(var1)+irReadVarA #calibration
+    return irReadVarB/(var1+1e-6)+irReadVarA #calibration
 
 # LCDMenu #################################################
 def LCDMenu():
