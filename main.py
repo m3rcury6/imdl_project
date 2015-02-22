@@ -27,23 +27,23 @@ def decision(Ldist,Mdist,Rdist):
     Mdist = kj.tooClose(Mdist)
     Rdist = kj.tooClose(Rdist)
     if((not Ldist) and (not Mdist) and (not Rdist)):
-        print "fwd" ###
+        # print "fwd" ###
         fwd(speed)
     elif((not Ldist) and Rdist):
-        print "left" ###
+        # print "left" ###
         left(speed)
     elif((not Rdist) and ((not Ldist and Mdist) or (Ldist and not Mdist))):
-        print "right" ###
+        # print "right" ###
         right(speed)
 
     elif((Ldist) and ((not Rdist and Mdist) or (Rdist and not Mdist))):
-        print "backup, turn" ###
+        # print "backup, turn" ###
         bwd(speed)
         sleep(1.5)
         right(speed)
         sleep(1.5)
     else:
-        print "backup, 180" ###
+        # print "backup, 180" ###
         bwd(speed)
         sleep(1.5)
         right(speed)
@@ -219,9 +219,9 @@ while(1):
 
 
 
-    LoopTime=time.time()-prevTime
-    prevTime=time.time()
-    print int(LoopTime*1000)
+    # LoopTime=time.time()-prevTime
+    # prevTime=time.time()
+    # print int(LoopTime*1000)
     if gpio.event_detected(mainPin):
         pause()
         # print "Ending Program"
