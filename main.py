@@ -128,6 +128,7 @@ def stop():
 
 def pause():
     pauseDone=0
+    stop()
     sleep(1)
     while(not pauseDone):
         print "."
