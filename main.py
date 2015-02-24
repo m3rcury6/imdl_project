@@ -138,6 +138,7 @@ def pause():
             print "returning..."
 
     sleep(1)
+print "proof that master drives branches"
 
 
 
