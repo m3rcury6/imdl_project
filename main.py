@@ -158,19 +158,19 @@ def serialReceive():
 	strInfo=ser.readline()
 	strInfo=strInfo[0:len(strInfo)-1]
 	from string import count
-	vars=range(count(kjgstr,',')+1)
+	vars=range(count(strInfo,',')+1)
 	i=0;
 	prev=0;
-	n=len(kjgstr)
+	n=len(strInfo)
 	cc=0
 	while(i<n):
-		if(kjgstr[i]==','):
+		if(strInfo[i]==','):
 			# print cc
-			vars[cc]=int(kjgstr[prev:i])
+			vars[cc]=int(strInfo[prev:i])
 			prev=i+1
 			cc+=1
 		i+=1
-	vars[cc]=int(kjgstr[prev:i])
+	vars[cc]=int(strInfo[prev:i])
 	return vars
 def serialSend(arr):
 	for i in range(0,len(arr)-1):
