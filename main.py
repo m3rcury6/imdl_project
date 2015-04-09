@@ -20,7 +20,7 @@ import Adafruit_BBIO.UART as UART
 
 gpio.cleanup()
 pwm.cleanup()
-showWindow=1
+showWindow=0
 
 
 
