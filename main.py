@@ -8,7 +8,7 @@ sleep = time.sleep
 import kj
 gpio.cleanup()
 pwm.cleanup()
-showWindow=0
+showWindow=1
 # FUNCTIONS ###############################################
 def debugDONE():
 	while(1):
@@ -28,7 +28,7 @@ def camHelper(color):
 	sU=color[4]
 	vU=color[5]
 
-	ratio=0.75 #note, 1 = 1:1 ratio
+	ratio=0.6 #note, 1 = 1:1 ratio
 	blurVal=5 #should be a positive odd number
 	morphVal=11 #should be a positive odd number
 
@@ -177,11 +177,13 @@ if(showWindow==1):
 cap = cv2.VideoCapture(0) #select video source
 # getCamAngle() # initialize 
 
-orange2=[5,170,135,22,255,239]
+orange2=[7,189,90,25,255,255]
 
 # MAIN LOOP ###############################################
 while(1):
-	print getCamAngle(orange2)
+	cameraInfo getCamAngle(orange2)
+
+	
 
 
 	# DO NOT TOUCH, KEEP AT END OF FORLOOP
