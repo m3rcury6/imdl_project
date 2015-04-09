@@ -72,8 +72,8 @@ def stdev(xarray):
     xavg=avg(xarray)
     sumstd=0.0
     for i in range(0,n):
-        sumstd=sumstd+(xarray[i]-xavg)
-    sumstd=sumstd/n
+        sumstd=sumstd+(xarray[i]-xavg)**2
+    sumstd=sumstd/(float(n)-1.0)
     return sumstd**0.5
 
 # map #####################################################
