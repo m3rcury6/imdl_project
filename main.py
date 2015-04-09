@@ -165,7 +165,7 @@ def serialReceive():
 	cc=0
 	while(i<n):
 		if(kjgstr[i]==','):
-			print cc
+			# print cc
 			vars[cc]=int(kjgstr[prev:i])
 			prev=i+1
 			cc+=1
@@ -228,7 +228,7 @@ orange2=[7,189,90,25,255,255]
 
 # MAIN LOOP ###############################################
 while(1):
-	print "new cycle"
+	# print "new cycle"
 	serialSend([123,45,-26])
 	print serialReceive();
 
