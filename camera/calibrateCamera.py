@@ -23,6 +23,17 @@ cv2.createTrackbar('V lower','image',0,255,nothing)
 cv2.createTrackbar('H upper','image',0,179,nothing)
 cv2.createTrackbar('S upper','image',0,255,nothing)
 cv2.createTrackbar('V upper','image',0,255,nothing)
+
+#initialize trackbar positions
+ini=[13,193,150,22,255,201] # orange balloon
+cv2.setTrackbarPos('H lower','image',ini[0])
+cv2.setTrackbarPos('S lower','image',ini[1])
+cv2.setTrackbarPos('V lower','image',ini[2])
+cv2.setTrackbarPos('H upper','image',ini[3])
+cv2.setTrackbarPos('S upper','image',ini[4])
+cv2.setTrackbarPos('V upper','image',ini[5])
+
+
 #create trackbar, called H, in window image, w/ range (0,255), pass nothing
     #create sample color boxes
 tL=(10,10)
@@ -63,6 +74,10 @@ while(1):
 
     # Take each frame
     _, frame = cap.read()
+    ratio=0.75
+    frame = cv2.resize(frame,None,fx=ratio, fy=ratio,
+					   interpolation = cv2.INTER_AREA)
+
 
     # Convert BGR to HSV
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
