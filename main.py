@@ -157,7 +157,7 @@ kj.ledINIT()
 t=time.time()*1000
 
 # OPEN CV SETUP:
-ball1=[13,193,150,22,255,201] # orange balloon
+ball1=[14,66,135,23,255,255] # orange balloon
 ball2=[17,90,114,25,255,201] #pink balloon
 ball3=[41,139,39,75,255,125]#green baloon
 balls=[ball1,ball2,ball3] #list of all colors
