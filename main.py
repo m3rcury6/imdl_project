@@ -20,6 +20,7 @@ plan to get this code on track for OA:
 
 def getCameraAngle():
 	_, frame = cap.read()
+	# cx=0
 	# Resize the captured frame
 	ratio=0.5 #note, 1 = 1:1 ratio
 	frame = cv2.resize(frame,None,fx=ratio, fy=ratio,
@@ -104,7 +105,7 @@ def getCameraAngle():
 	except:
 		print "VideoFrameError"
 
-	return cx-imgW
+	# return cx-imgW
 
 
 
