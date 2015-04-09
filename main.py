@@ -9,20 +9,20 @@ import kj
 gpio.cleanup()
 pwm.cleanup()
 
-'''
-plan to get this code on track for OA:
-1. get IR pins working
-3. get button presses working
-2. get manual motor commands working
-3. link IR to adjustment in motor comm
-'''
+
 # FUNCTIONS ###############################################
 def debugDONE():
 	while(1):
 		time.sleep(2)
 		print "DONE"
 
-def camHelper():
+def camHelper(color):
+	hL=color[0]
+	sL=color[1]
+	vL=color[2]
+	hU=color[3]
+	sU=color[4]
+	vU=color[5]
 	ratio=0.5 #note, 1 = 1:1 ratio
 	blurVal=5 #should be a positive odd number
 	morphVal=11 #should be a positive odd number
@@ -36,7 +36,7 @@ def camHelper():
 		return va/fw*(cc-fw)+va/2
 
 	_, frame = cap.read()
-	camAngle=0;
+	camAngle=0
 	# Resize the captured frame
 	frame = cv2.resize(frame,None,fx=ratio, fy=ratio,
 					   interpolation = cv2.INTER_AREA)
@@ -113,6 +113,17 @@ def camHelper():
 #		print "VideoFrameError"
 
 	return int(camAngle)
+def getCamAngle(color):
+	# input: camera video
+	# output: avg/stdev of processed images
+	# purpose: simplify question of whether the target \
+	#	waypoint has been identified.
+	a=range(0,10)
+	for i in range(0,10):
+		a[i]=camHelper(color)
+	a_avg=kj.avg(a)
+	a_std=kj.stdev(a)
+	return (a_avg,a_std)
 
 
 
@@ -128,11 +139,6 @@ cols=[pin_green,pin_yellow,pin_red,pin_blue]
 
 # INPUTS
 pin_button = "P8_17"
-
-
-
-
-
 
 
 # SETUP ###################################################
@@ -154,28 +160,25 @@ t=time.time()*1000
 ball1=[13,193,150,22,255,201] # orange balloon
 ball2=[17,90,114,25,255,201] #pink balloon
 ball3=[41,139,39,75,255,125]#green baloon
+balls=[ball1,ball2,ball3] #list of all colors
 
-ini=ball1
+# ini=ball1
 
-hL=ini[0]
-sL=ini[1]
-vL=ini[2]
-hU=ini[3]
-sU=ini[4]
-vU=ini[5]
+# hL2=ini[0]
+# sL2=ini[1]
+# vL2=ini[2]
+# hU2=ini[3]
+# sU2=ini[4]
+# vU2=ini[5]
 # cv2.namedWindow('contours')
 cap = cv2.VideoCapture(0) #select video source
 # getCameraAngle() # initialize 
 
 
-def getCamAngle():
-	a=range(0,10)
-	for i in range(0,10):
-		a[i]=camHelper()
-	return a
+
 
 t=time.time()
-print getCamAngle()
+print getCamAngle(balls[0])
 print time.time()-t,"seconds to read 10 times"
 debugDONE()
 
@@ -187,10 +190,7 @@ debugDONE()
 
 # MAIN LOOP ###############################################
 while(1):
-	#end program when hit 'Escape' key
-	k = cv2.waitKey(5) & 0xFF
-	if k == 27:
-		break
+	print "lala"
 
 # MAIN END ################################################
 cv2.destroyAllWindows()
