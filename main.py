@@ -104,7 +104,7 @@ def getCameraAngle():
 	except:
 		print "VideoFrameError"
 
-
+	return cx-imgW
 
 
 
@@ -162,7 +162,7 @@ cap = cv2.VideoCapture(0) #select video source
 
 # MAIN LOOP ###############################################
 while(1):
-
+	getCameraAngle()
 
 
 
