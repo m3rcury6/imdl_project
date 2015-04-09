@@ -210,7 +210,7 @@ gpio.add_event_detect(pin_button,gpio.BOTH)
 adc.setup()
 kj.ledINIT()
 UART.setup("UART1")
-ser=serial.Serial(port = "/dev/tty01",baudrate=115200)
+ser=serial.Serial(port = "/dev/ttyO1",baudrate=115200)
 ser.close();
 ser.open();
 
