@@ -1,3 +1,12 @@
+'''
+objective: make the beaglebone a specialized 
+sensor that looks through the camera, 
+decides whether an object is detected, and tells
+the teensy at what angle the desired object iss
+'''
+
+
+# INCLUDED MODULES ########################################
 import Adafruit_BBIO.GPIO as gpio
 import Adafruit_BBIO.ADC as adc
 import Adafruit_BBIO.PWM as pwm
@@ -6,9 +15,15 @@ import numpy as np
 import time
 sleep = time.sleep
 import kj
+import serial
+import Adafruit_BBIO.UART as UART
+
 gpio.cleanup()
 pwm.cleanup()
 showWindow=1
+
+
+
 # FUNCTIONS ###############################################
 def debugDONE():
 	while(1):
@@ -19,7 +34,6 @@ def angleError(raw_cx,FrameWidth):
 	va=float(75) #degrees
 	fw=float(FrameWidth)
 	return va/fw*(cc-fw)+va/2
-
 def camHelper(color):
 	hL=color[0]
 	sL=color[1]
@@ -121,7 +135,6 @@ def camHelper(color):
 			print "VideoFrameError"
 
 	return int(camAngle)
-
 def getCamAngle(color):
 	# input: camera video
 	# output: avg/stdev of processed images
@@ -134,7 +147,40 @@ def getCamAngle(color):
 	a_avg=kj.avg(a)
 	a_std=kj.stdev(a)
 	return (a_avg,a_std)
+def serialReceive():
+	# input: serial data from Teensy
+	# output: parsed integer values
+	# purpose: facilitate communication between
+	#	boards. only expect to receive uint8 
+	# 	values from the teensy
 
+	# read data (assumes available)
+	strInfo=ser.readline()
+	strInfo=strInfo[0:len(strInfo)-1]
+	from string import count
+	vars=range(count(kjgstr,',')+1)
+	i=0;
+	prev=0;
+	n=len(kjgstr)
+	cc=0
+	while(i<n):
+		if(kjgstr[i]==','):
+			print cc
+			vars[cc]=int(kjgstr[prev:i])
+			prev=i+1
+			cc+=1
+		i+=1
+	vars[cc]=int(kjgstr[prev:i])
+	return vars
+def serialSend(arr):
+	for i in range(0,len(a)-1):
+		ser.write(str(a[i])+',')
+	i+=1
+	ser.write(str(a[i])+'!') # note: terminate with '!'
+	
+	# this is only to read information from teensy
+	kjg= ser.readline()
+	kjg=kjg[0:len(kjg)-1]
 
 
 
@@ -152,19 +198,21 @@ pin_button = "P8_17"
 
 
 # SETUP ###################################################
-# note: can set globals here
+# note: set globals here 
 
-# gpio.setup(pin_green,1)
-# gpio.setup(pin_yellow,1)
-# gpio.setup(pin_red,1)
-# gpio.setup(pin_blue,1)
-# gpio.setup(pin_button,0)
-# gpio.add_event_detect(pin_button,gpio.BOTH)
+gpio.setup(pin_green,1)
+gpio.setup(pin_yellow,1)
+gpio.setup(pin_red,1)
+gpio.setup(pin_blue,1)
+gpio.setup(pin_button,0)
+gpio.add_event_detect(pin_button,gpio.BOTH)
 
-# adc.setup()
-# kj.ledINIT()
-
-t=time.time()*1000
+adc.setup()
+kj.ledINIT()
+UART.setup("UART1")
+ser=serial.Serial(port = "/dev/tty01",baudrate=115200)
+ser.close();
+ser.open();
 
 # OPEN CV SETUP:
 orange=[14,66,135,23,255,255] # orange balloon
@@ -175,15 +223,13 @@ balls=[orange,pink,green] #list of all colors
 if(showWindow==1):
 	cv2.namedWindow('contours')
 cap = cv2.VideoCapture(0) #select video source
-# getCamAngle() # initialize 
 
 orange2=[7,189,90,25,255,255]
 
 # MAIN LOOP ###############################################
 while(1):
-	cameraInfo getCamAngle(orange2)
-
-	
+	serialSend([123,45,-26])
+	print serialReceive();
 
 
 	# DO NOT TOUCH, KEEP AT END OF FORLOOP
@@ -196,5 +242,7 @@ while(1):
 # ENABLE BELOW TO SHOW WINDOW
 if(showWindow==1):
 	cv2.destroyAllWindows()
-# gpio.cleanup()
-# pwm.cleanup()
+gpio.cleanup()
+pwm.cleanup()
+# if the kernel ever gets fixed, enable this code
+# UART.cleanup()
