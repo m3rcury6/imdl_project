@@ -228,9 +228,11 @@ orange2=[7,189,90,25,255,255]
 
 # MAIN LOOP ###############################################
 while(1):
+	print "new cycle"
 	serialSend([123,45,-26])
 	print serialReceive();
 
+	time.sleep(2)
 
 	# DO NOT TOUCH, KEEP AT END OF FORLOOP
 	# KEEP ENABLED WHEN SHOWING WINDOWS
