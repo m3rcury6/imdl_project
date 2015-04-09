@@ -173,14 +173,10 @@ def serialReceive():
 	vars[cc]=int(kjgstr[prev:i])
 	return vars
 def serialSend(arr):
-	for i in range(0,len(a)-1):
-		ser.write(str(a[i])+',')
+	for i in range(0,len(arr)-1):
+		ser.write(str(arr[i])+',')
 	i+=1
-	ser.write(str(a[i])+'!') # note: terminate with '!'
-	
-	# this is only to read information from teensy
-	kjg= ser.readline()
-	kjg=kjg[0:len(kjg)-1]
+	ser.write(str(arr[i])+'!') # note: terminate with '!'
 
 
 
