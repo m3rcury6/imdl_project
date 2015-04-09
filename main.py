@@ -23,7 +23,7 @@ def camHelper(color):
 	hU=color[3]
 	sU=color[4]
 	vU=color[5]
-	ratio=0.5 #note, 1 = 1:1 ratio
+	ratio=0.75 #note, 1 = 1:1 ratio
 	blurVal=5 #should be a positive odd number
 	morphVal=11 #should be a positive odd number
 
@@ -121,6 +121,7 @@ def getCamAngle(color):
 	a=range(0,10)
 	for i in range(0,10):
 		a[i]=camHelper(color)
+		print a[i] # for debugging
 	a_avg=kj.avg(a)
 	a_std=kj.stdev(a)
 	return (a_avg,a_std)
