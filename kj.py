@@ -390,3 +390,132 @@ def aRead(adcNum):
 
 
 # end of file #############################################
+
+# def getIR():
+# 	Ldist=kj.irReadcm(irLPin)
+# 	Mdist=kj.irReadcm(irMPin)
+# 	Rdist=kj.irReadcm(irRPin)
+# 	return (Ldist,Mdist,Rdist)
+#
+# def decision(Ldist,Mdist,Rdist):
+#
+# 	Ldist = kj.tooClose(Ldist)
+# 	Mdist = kj.tooClose(Mdist)
+# 	Rdist = kj.tooClose(Rdist)
+# 	if((not Ldist) and (not Mdist) and (not Rdist)):
+# 		# print "fwd" ###
+# 		fwd(speed)
+# 	elif((not Ldist) and Rdist):
+# 		# print "left" ###
+# 		left(speed)
+# 	elif((not Rdist) and ((not Ldist and Mdist) or (Ldist and not Mdist))):
+# 		# print "right" ###
+# 		right(speed)
+#
+# 	elif((Ldist) and ((not Rdist and Mdist) or (Rdist and not Mdist))):
+# 		# print "backup, turn" ###
+# 		bwd(speed)
+# 		sleep(1.5)
+# 		right(speed)
+# 		sleep(1.5)
+# 	else:
+# 		# print "backup, 180" ###
+# 		bwd(speed)
+# 		sleep(1.5)
+# 		right(speed)
+# 		sleep(1.5)
+#
+# def fwd(dutyCycle):
+# 	# print "fwd"
+# 	gpio.output(L1pin,0)
+# 	gpio.output(L2pin,1)
+# 	gpio.output(R1pin,1) #this makes mR turn clockwise, fwd motion.
+# 	gpio.output(R2pin,0)
+# 	try:
+# 		pwm.set_duty_cycle(LpwmPin,dutyCycle)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+# 	try:
+# 		pwm.set_duty_cycle(RpwmPin,dutyCycle)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+#
+# def bwd(dutyCycle):
+# 	# print "bwd"
+# 	gpio.output(L1pin,1)
+# 	gpio.output(L2pin,0)
+# 	gpio.output(R1pin,0)
+# 	gpio.output(R2pin,1)
+# 	try:
+# 		pwm.set_duty_cycle(LpwmPin,dutyCycle)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+# 	try:
+# 		pwm.set_duty_cycle(RpwmPin,dutyCycle)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+#
+# def left(dutyCycle):
+# 	# will initially do 0-radius turns
+# 	# print "left"
+# 	gpio.output(L1pin,1)
+# 	gpio.output(L2pin,0)
+# 	gpio.output(R1pin,1)
+# 	gpio.output(R2pin,0)
+# 	try:
+# 		pwm.set_duty_cycle(LpwmPin,dutyCycle)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+# 	try:
+# 		pwm.set_duty_cycle(RpwmPin,dutyCycle)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+#
+# def right(dutyCycle):
+# 	# will initially do 0-radius turns
+# 	# print "right"
+# 	gpio.output(L1pin,0)
+# 	gpio.output(L2pin,1)
+# 	gpio.output(R1pin,0)
+# 	gpio.output(R2pin,1)
+# 	try:
+# 		pwm.set_duty_cycle(LpwmPin,dutyCycle)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+# 	try:
+# 		pwm.set_duty_cycle(RpwmPin,dutyCycle)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+#
+# def stop():
+# 	# print "stop"
+# 	gpio.output(L1pin,1)
+# 	gpio.output(L2pin,1)
+# 	gpio.output(R1pin,1)
+# 	gpio.output(R2pin,1)
+# 	try:
+# 		pwm.set_duty_cycle(LpwmPin,0)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+# 	try:
+# 		pwm.set_duty_cycle(RpwmPin,0)
+# 	except IOError as e:
+# 		print "KJG: pwm error"
+#
+# def pause():
+# 	pauseDone=0
+# 	stop()
+# 	sleep(1)
+# 	while(not pauseDone):
+# 		print "."
+# 		sleep(.2)
+# 		if gpio.event_detected(mainPin):
+# 			pauseDone=1
+# 			print "returning..."
+#
+# 	sleep(1)
+
+
+
+
+
