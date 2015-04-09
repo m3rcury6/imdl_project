@@ -17,18 +17,32 @@ plan to get this code on track for OA:
 3. link IR to adjustment in motor comm
 '''
 # FUNCTIONS ###############################################
+def debugDONE():
+	while(1):
+		time.sleep(2)
+		print "DONE"
 
-def getCameraAngle():
-	_, frame = cap.read()
-	# cx=0
-	# Resize the captured frame
+def camHelper():
 	ratio=0.5 #note, 1 = 1:1 ratio
+	blurVal=5 #should be a positive odd number
+	morphVal=11 #should be a positive odd number
+
+
+
+	def angleError(raw_cx,FrameWidth):
+		cc=float(raw_cx)
+		va=float(75) #degrees
+		fw=float(FrameWidth)
+		return va/fw*(cc-fw)+va/2
+
+	_, frame = cap.read()
+	camAngle=0;
+	# Resize the captured frame
 	frame = cv2.resize(frame,None,fx=ratio, fy=ratio,
 					   interpolation = cv2.INTER_AREA)
 	frameOrig=frame
 
 	#blur with Gauss
-	blurVal=5 #should be a positive odd number
 	frame=cv2.GaussianBlur(frame,(blurVal,blurVal),0)
 
 	# save only colors in desired range
@@ -44,7 +58,6 @@ def getCameraAngle():
 
 
 		#erode then dilate, aka open the image
-		morphVal=11 #should be a positive odd number
 		kernel = np.ones((morphVal,morphVal),np.uint8)
 		frame = cv2.morphologyEx(frame, cv2.MORPH_OPEN, kernel)
 
@@ -66,46 +79,40 @@ def getCameraAngle():
 				loc=contours.index(max(contours,key=cv2.contourArea))
 			# print loc
 			except ValueError:
-				print "ValueError: loc set to 0"
+				# print "ValueError: loc set to 0"
 				loc=0
 
 			# ensure never go out of bounds
 			if(loc>len(contours)):
-				print "OutOfBoundsError: loc set to zero"
+				# print "OutOfBoundsError: loc set to zero"
 				loc=0
 
 			cnt=contours[loc]
 
-			# get frame properties, get largest object properties
-			M=cv2.moments(cnt)
-			cx=int(M['m10']/M['m00']) # remember A*xavg=int(fn*dA)
-			cy=int(M['m01']/M['m00'])
-			imgH=frameOrig.shape[0]
+			# get frame properties			
+			imgH=frameOrig.shape[0] #don't need this one
 			imgW=frameOrig.shape[1]
-
 			# create bounding circle
-			(xcirc,ycirc),rcirc=cv2.minEnclosingCircle(cnt)
+			(xcirc,ycirc),rcirc=cv2.minEnclosingCircle(cnt) #returns a float
 			center = (int(xcirc),int(ycirc))
 			cv2.circle(frameOrig,center,int(rcirc),(255,0,0),1)
-
-
+			# camAngle=5
 			#create 2D error line
-			cv2.line(frameOrig,(imgW/2,imgH/2),(cx,cy),(255,0,255),1)
-
-
-
+			cv2.line(frameOrig,(imgW/2,imgH/2),(int(xcirc),int(ycirc)),(255,0,255),1)
+			camAngle=angleError(xcirc,imgW)
 
 		# END OF IMAGE PROCESSING #############################
 	except:
 		print "ColorspaceError"
+		# camAngle=100
 
 
-	try:
-		cv2.imshow('contours',frameOrig)
-	except:
-		print "VideoFrameError"
+#	try:
+#		cv2.imshow('contours',frameOrig)
+#	except:
+#		print "VideoFrameError"
 
-	# return cx-imgW
+	return int(camAngle)
 
 
 
@@ -156,17 +163,30 @@ vL=ini[2]
 hU=ini[3]
 sU=ini[4]
 vU=ini[5]
-cv2.namedWindow('contours')
+# cv2.namedWindow('contours')
 cap = cv2.VideoCapture(0) #select video source
+# getCameraAngle() # initialize 
+
+
+def getCamAngle():
+	a=range(0,10)
+	for i in range(0,10):
+		a[i]=camHelper()
+	return a
+
+t=time.time()
+print getCamAngle()
+print time.time()-t,"seconds to read 10 times"
+debugDONE()
+
+
+	
+
 
 
 
 # MAIN LOOP ###############################################
 while(1):
-	getCameraAngle()
-
-
-
 	#end program when hit 'Escape' key
 	k = cv2.waitKey(5) & 0xFF
 	if k == 27:
