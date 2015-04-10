@@ -12,22 +12,22 @@ import Adafruit_BBIO.ADC as adc
 import Adafruit_BBIO.PWM as pwm
 import cv2
 import numpy as np
-import time
-sleep = time.sleep
+from time import sleep
+from time import time
 import kj
 import serial
 import Adafruit_BBIO.UART as UART
 
 gpio.cleanup()
 pwm.cleanup()
-showWindow=0
+showWindow=1
 
 
 
 # FUNCTIONS ###############################################
 def debugDONE():
 	while(1):
-		time.sleep(2)
+		sleep(2)
 		print "DONE"
 def angleError(raw_cx,FrameWidth):
 	cc=float(raw_cx)
@@ -42,9 +42,9 @@ def camHelper(color):
 	sU=color[4]
 	vU=color[5]
 
-	ratio=0.6 #note, 1 = 1:1 ratio
-	blurVal=5 #should be a positive odd number
-	morphVal=11 #should be a positive odd number
+	ratio=1 #note, 1 = 1:1 ratio
+	blurVal=7 #should be a positive odd number
+	morphVal=15 #should be a positive odd number
 
 
 
@@ -135,7 +135,7 @@ def camHelper(color):
 			print "VideoFrameError"
 
 	return int(camAngle)
-def getCamAngle(color):
+def getCamData(color):
 	# input: camera video
 	# output: avg/stdev of processed images
 	# purpose: simplify question of whether the target \
@@ -178,6 +178,8 @@ def serialSend(arr):
 	i+=1
 	ser.write(str(arr[i])+'!') # note: terminate with '!'
 
+def serialSendSingle(value):
+	ser.write(str(value)+'!')
 
 
 # PIN DEFINES #############################################
@@ -207,28 +209,48 @@ adc.setup()
 kj.ledINIT()
 UART.setup("UART1")
 ser=serial.Serial(port = "/dev/ttyO1",baudrate=115200)
-ser.close();
-ser.open();
+ser.close()
+ser.open()
+
+state=0
+
 
 # OPEN CV SETUP:
-orange=[14,66,135,23,255,255] # orange balloon
+orange=[7,189,90,25,255,255] # orange balloon
 pink=[17,90,114,25,255,201] #pink balloon
-green=[41,139,39,75,255,125]#green baloon
+green=[41,31,86,91,255,252]#green baloon
 balls=[orange,pink,green] #list of all colors
 
 if(showWindow==1):
 	cv2.namedWindow('contours')
 cap = cv2.VideoCapture(0) #select video source
 
-orange2=[7,189,90,25,255,255]
+color=2 # color index for hsv values
+
 
 # MAIN LOOP ###############################################
 while(1):
-	# print "new cycle"
-	serialSend([123,45,-26])
-	print serialReceive();
+	# objectives: 
+	# check camera, send (camera angle), receive color, <change LED's (not yet)>, repeat
+	
+	# step 1: check camera
+	camData=camHelper(balls[color])
+	print camData
+#	if(camData[1]<10):
+#		camData=camData[0]
+#		print "now camData is ",camData
+#	else:
+#		camData=0
 
-	time.sleep(2)
+	# step 2: send data
+	serialSendSingle(camData)
+#	serialSend([0,camData,0]) # (state, camData, buttonState)
+
+	# step 3:receive data
+#	TnsData=serialReceive()
+#	print TnsData	
+
+	# sleep(4) # wait a few seconds before next check (have to slow down robot for that)
 
 	# DO NOT TOUCH, KEEP AT END OF FORLOOP
 	# KEEP ENABLED WHEN SHOWING WINDOWS

@@ -32,5 +32,5 @@ def off(n):
 	value = open(st,'w')
 	value.write(str(0))
 	value.close()
-	
+
 # eof
