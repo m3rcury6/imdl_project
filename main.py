@@ -18,9 +18,50 @@ import kj
 import serial
 import Adafruit_BBIO.UART as UART
 
+# initializations
+showWindow=1
+onComputer=1
+ratio=0.5 #note, 1 = 1:1 ratio
+blurVal=7 #should be a positive odd number
+morphVal=15 #should be a positive odd number
+
 gpio.cleanup()
 pwm.cleanup()
 
+#not sure what this does yet, but used in trackbars
+
+def nothing(x):
+    pass
+if(showWindow==1):
+	#set controls window parameters
+	ht=200
+	wd=512
+	img=np.zeros((ht,wd,3), np.uint8)
+	cv2.namedWindow('image')
+	#make  trackbars for upper / lower ranges
+	    #lower range
+	cv2.createTrackbar('H lower','image',0,179,nothing)
+	cv2.createTrackbar('S lower','image',0,255,nothing)
+	cv2.createTrackbar('V lower','image',0,255,nothing)
+	    #upper range
+	cv2.createTrackbar('H upper','image',0,179,nothing)
+	cv2.createTrackbar('S upper','image',0,255,nothing)
+	cv2.createTrackbar('V upper','image',0,255,nothing)
+
+	# #initialize trackbar positions
+
+	ini=[0,0,0,179,255,255] # orange balloon
+	cv2.setTrackbarPos('H lower','image',ini[0])
+	cv2.setTrackbarPos('S lower','image',ini[1])
+	cv2.setTrackbarPos('V lower','image',ini[2])
+	cv2.setTrackbarPos('H upper','image',ini[3])
+	cv2.setTrackbarPos('S upper','image',ini[4])
+	cv2.setTrackbarPos('V upper','image',ini[5])
+	# set color window palettes
+	tL=(10,10)
+	bR=(wd/2-10,ht-10)
+	tL2=(wd/2+10,10)
+	bR2=(wd-10,ht-10)
 
 
 # FUNCTIONS ###############################################
@@ -40,13 +81,6 @@ def camHelper(color):
 	hU=color[3]
 	sU=color[4]
 	vU=color[5]
-
-	ratio=1 #note, 1 = 1:1 ratio
-	blurVal=7 #should be a positive odd number
-	morphVal=15 #should be a positive odd number
-
-
-
 
 	_, frame = cap.read()
 	camAngle=0
@@ -176,7 +210,6 @@ def serialSend(arr):
 		ser.write(str(arr[i])+',')
 	i+=1
 	ser.write(str(arr[i])+'!') # note: terminate with '!'
-
 def serialSendSingle(value):
 	ser.write(str(value)+',')
 
@@ -196,27 +229,32 @@ pin_button = "P8_17"
 
 # SETUP ###################################################
 # note: set globals here 
+if(onComputer==0):
+	# if not on computer, do below
+	gpio.setup(pin_green,1)
+	gpio.setup(pin_yellow,1)
+	gpio.setup(pin_red,1)
+	gpio.setup(pin_blue,1)
+	gpio.setup(pin_button,0)
+	gpio.add_event_detect(pin_button,gpio.BOTH)
 
-gpio.setup(pin_green,1)
-gpio.setup(pin_yellow,1)
-gpio.setup(pin_red,1)
-gpio.setup(pin_blue,1)
-gpio.setup(pin_button,0)
-gpio.add_event_detect(pin_button,gpio.BOTH)
+	adc.setup()
+	kj.ledINIT()
+	UART.setup("UART1")
+	ser=serial.Serial(port = "/dev/ttyO1",baudrate=115200)
+	ser.close()
+	ser.open()
 
-adc.setup()
-kj.ledINIT()
-UART.setup("UART1")
-ser=serial.Serial(port = "/dev/ttyO1",baudrate=115200)
-ser.close()
-ser.open()
-
-state=0
-
+	i=0
+	while(1):
+		kj.led(i,1)
+		sleep(0.5)
+		kj.led(i,0)
+		i+=1
+		if(i==3): 
+			i=0
 
 # OPEN CV SETUP:
-showWindow=1
-
 orange=[7,189,90,25,255,255] # orange balloon
 pink=[17,90,114,25,255,201] #pink balloon
 green=[41,31,86,91,255,252]#green baloon
@@ -231,20 +269,67 @@ color=2 # color index for hsv values
 
 # MAIN LOOP ###############################################
 while(1):
+
+
+
 	# objectives: 
 	# check camera, send (camera angle), receive color, <change LED's (not yet)>, repeat
 	
 	# step 1: check camera
 	camData=camHelper(temp)
 	print camData
-#	if(camData[1]<10):
-#		camData=camData[0]
-#		print "now camData is ",camData
-#	else:
-#		camData=0
+	#	if(camData[1]<10):
+	#		camData=camData[0]
+	#		print "now camData is ",camData
+	#	else:
+	#		camData=0
 
 	# step 2: send data
-	serialSendSingle(camData)
+	if(onComputer==0):
+		serialSendSingle(camData)
+
+
+	if(showWindow==1):
+		# controls window
+		cv2.imshow('image',img)
+		#track set 1 - lower
+		hL = cv2.getTrackbarPos('H lower','image')
+		sL = cv2.getTrackbarPos('S lower','image')
+		vL = cv2.getTrackbarPos('V lower','image')    
+		hsvL=np.uint8([[[hL,sL,vL]]])   #trans to BGR
+		bgrL=cv2.cvtColor(hsvL,cv2.COLOR_HSV2BGR)
+		b_L=int(bgrL[0][0][0])
+		g_L=int(bgrL[0][0][1])
+		r_L=int(bgrL[0][0][2])
+		    #track set 1 - upper
+		hU = cv2.getTrackbarPos('H upper','image')
+		sU = cv2.getTrackbarPos('S upper','image')
+		vU = cv2.getTrackbarPos('V upper','image')    
+		hsvU=np.uint8([[[hU,sU,vU]]])   #trans to BGR
+		bgrU=cv2.cvtColor(hsvU,cv2.COLOR_HSV2BGR)
+		b_U=int(bgrU[0][0][0])
+		g_U=int(bgrU[0][0][1])
+		r_U=int(bgrU[0][0][2])
+		#plot everything
+		img[:]=0 #set controls bkgd to black
+		cv2.rectangle(img,tL,bR,(b_L,g_L,r_L),-1) #plot rect1
+		cv2.rectangle(img,tL2,bR2,(b_U,g_U,r_U),-1)    #plot rect2
+		temp=[hL,sL,vL,hU,sU,vU]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #	serialSend([0,camData,0]) # (state, camData, buttonState)
 
 	# step 3:receive data
