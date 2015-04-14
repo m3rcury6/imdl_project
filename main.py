@@ -32,6 +32,22 @@ pwm.cleanup()
 
 def nothing(x):
     pass
+def saveValues(arr):
+	saveFile = open('savedThresh','w')
+	for i in range(len(arr)):
+		saveFile.write(str(arr[i])+'\n')
+	saveFile.close()
+
+def openValues():
+	openFile=open('savedThresh','r')
+	arr=range(6)
+	j=0
+	for i in openFile:
+		arr[j]=int(i)
+		j+=1
+	openFile.close()	
+	return arr
+
 if(showWindow==1):
 	#set controls window parameters
 	ht=200
@@ -51,6 +67,7 @@ if(showWindow==1):
 	# #initialize trackbar positions
 
 	ini=[0,0,0,179,255,255] # orange balloon
+	ini=openValues()
 	cv2.setTrackbarPos('H lower','image',ini[0])
 	cv2.setTrackbarPos('S lower','image',ini[1])
 	cv2.setTrackbarPos('V lower','image',ini[2])
@@ -348,6 +365,7 @@ while(1):
 # ENABLE BELOW TO SHOW WINDOW
 if(showWindow==1):
 	cv2.destroyAllWindows()
+	saveValues(temp)
 gpio.cleanup()
 pwm.cleanup()
 # if the kernel ever gets fixed, enable this code
