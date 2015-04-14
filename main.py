@@ -279,6 +279,7 @@ balls=[orange,pink,green] #list of all colors
 temp=[0,23,72,26,255,255]
 if(showWindow==1):
 	cv2.namedWindow('contours')
+	
 cap = cv2.VideoCapture(0) #select video source
 
 color=2 # color index for hsv values
@@ -287,14 +288,12 @@ color=2 # color index for hsv values
 # MAIN LOOP ###############################################
 while(1):
 
-
-
 	# objectives: 
 	# check camera, send (camera angle), receive color, <change LED's (not yet)>, repeat
 	
 	# step 1: check camera
 	camData=camHelper(temp)
-	print camData
+	# print camData
 	#	if(camData[1]<10):
 	#		camData=camData[0]
 	#		print "now camData is ",camData
