@@ -19,17 +19,16 @@ import serial
 import Adafruit_BBIO.UART as UART
 
 # initializations
-showWindow=0
+showWindow=1 #0=none, 1 = only results window, 2 = all
 onComputer=1
 ratio=0.5 #note, 1 = 1:1 ratio
-blurVal=7 #should be a positive odd number
-morphVal=15 #should be a positive odd number
+blurVal=5 #should be a positive odd number
+morphVal=11 #should be a positive odd number
 
 gpio.cleanup()
 pwm.cleanup()
 
-#not sure what this does yet, but used in trackbars
-
+# functions critical for trackbars
 def nothing(x):
     pass
 def saveValues(arr):
@@ -37,7 +36,6 @@ def saveValues(arr):
 	for i in range(len(arr)):
 		saveFile.write(str(arr[i])+'\n')
 	saveFile.close()
-
 def openValues():
 	openFile=open('savedThresh','r')
 	arr=range(6)
@@ -48,8 +46,9 @@ def openValues():
 	openFile.close()	
 	return arr
 
-if(showWindow==1):
-	#set controls window parameters
+#set controls window parameters
+if(showWindow>1): 
+	
 	ht=200
 	wd=512
 	img=np.zeros((ht,wd,3), np.uint8)
@@ -179,7 +178,7 @@ def camHelper(color):
 	# 	print "ColorspaceError"
 		# camAngle=100
 
-	if(showWindow!=5):
+	if(showWindow>0):
 		try:
 			cv2.imshow('contours',frameOrig)
 		except:
@@ -229,8 +228,6 @@ def serialSend(arr):
 		ser.write(str(arr[i])+',')
 	i+=1
 	ser.write(str(arr[i])+'!') # note: terminate with '!'
-def serialSendSingle(value):
-	ser.write(str(value)+',')
 
 
 # PIN DEFINES #############################################
@@ -263,6 +260,9 @@ if(onComputer==0):
 	ser=serial.Serial(port = "/dev/ttyO1",baudrate=115200)
 	ser.close()
 	ser.open()
+	ser.flushInput()
+	ser.flushOutput()
+
 
 	i=0
 	while(1):
@@ -289,25 +289,13 @@ color=2 # color index for hsv values
 # MAIN LOOP ###############################################
 tstart=time() #get start time
 elapsed=tstart-time()
-# print tstart
 while(1):
-
 	# objectives: 
 	# check camera, send (camera angle), receive color, <change LED's (not yet)>, repeat
-	
-	# step 1: check camera
-	camData=camHelper(Target[focus])
-	# print camData
-	#	if(camData[1]<10):
-	#		camData=camData[0]
-	#		print "now camData is ",camData
-	#	else:
-	#		camData=0
 
-	# step 2: send data
-	if(onComputer==0):
-		serialSendSingle(camData)
-	if(showWindow==1):
+	# step 1: check camera
+	if(showWindow>1):
+		camData=camHelper(temp) #debugging purposes
 		# controls window
 		cv2.imshow('image',img)
 		#track set 1 - lower
@@ -333,34 +321,28 @@ while(1):
 		cv2.rectangle(img,tL,bR,(b_L,g_L,r_L),-1) #plot rect1
 		cv2.rectangle(img,tL2,bR2,(b_U,g_U,r_U),-1)    #plot rect2
 		temp=[hL,sL,vL,hU,sU,vU]
+	else:
+		camData=camHelper(Target[focus])
+		elapsed=time()-tstart
+		if(elapsed>2):
+			#switch targets
+			if(focus==0):
+				focus=1
+				mainTarg=pinkTarg
+				# print "switch"
+			elif(focus==1):
+				focus=0
+				mainTarg=greenTarg
+				# print "switch"
+			tstart=time() #reset timer
 
 
+	# step 2: send data
+	if(onComputer==0):
+		ser.write(str(camData)+',')
 
-
-	# debug to ensure can switch easily between targets
-	elapsed=time()-tstart
-	if(elapsed>2):
-		#switch targets
-		if(focus==0):
-			focus=1
-			mainTarg=pinkTarg
-			# print "switch"
-		elif(focus==1):
-			focus=0
-			mainTarg=greenTarg
-			# print "switch"
-		tstart=time() #reset timer
-
-
-
-
-
-
-
-
-
-
-
+		if(ser.inWaiting()>0):
+			print ser.readline()
 
 
 
@@ -380,7 +362,7 @@ while(1):
 # MAIN END ################################################
 
 # ENABLE BELOW TO SHOW WINDOW
-if(showWindow==1):
+if(showWindow>0):
 	cv2.destroyAllWindows()
 	saveValues(temp)
 gpio.cleanup()
