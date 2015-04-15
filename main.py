@@ -281,7 +281,7 @@ Target=[greenTarg,pinkTarg]
 focus=0
 temp=[0,23,72,26,255,255]
 
-cap = cv2.VideoCapture(1) #select video source
+cap = cv2.VideoCapture(0) #select video source
 
 color=2 # color index for hsv values
 
