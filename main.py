@@ -138,10 +138,24 @@ def camHelper(color):
 	contours, hierarchy = cv2.findContours(frame2,
 		cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
-	print len(contours)
 
 	# find moments, get centroid (as long as there are contours)
-	if len(contours) > 0:
+	if(len(contours)==0):
+		print "none found"
+	else:
+		i=0
+		j=0 #find largest contour, the jth value
+		for i in range(len(contours)):
+			if(cv2.contourArea(contours[j])<cv2.contourArea(contours[i])):
+				j=i
+		print cv2.contourArea(contours[j])
+
+
+		# print cv2.contourArea(contours[0])
+		# for i,c in enumerate(contours):
+		# 	area=cv2.contourArea(c)
+			
+	if (len(contours) > 0):
 
 		# first, want to find the largest contour, by area:
 		try:
@@ -169,7 +183,7 @@ def camHelper(color):
 		(xcirc,ycirc),rcirc=cv2.minEnclosingCircle(cnt)
 		center = (int(xcirc),int(ycirc))
 		#cv2.circle(frameOrig,center,int(rcirc),(0,0,255),2)
-#		print int(angleError(xcirc,imgW))
+		# print int(angleError(xcirc,imgW))
 		#create 2D error line
 		#cv2.line(frameOrig,(imgW/2,imgH/2),center,(0,0,255),2)
 		camAngle=int(angleError(xcirc,imgW))
@@ -279,11 +293,12 @@ if(onComputer==0):
 
 greenTarg=[34,133,108,96,255,255]
 pinkTarg=[0,202,137,30,255,255]
-Target=[greenTarg,pinkTarg]
+contourTarg=[0,23,72,26,255,255]
+Target=[greenTarg,pinkTarg,contourTarg]
 focus=0
 temp=[0,23,72,26,255,255]
 
-cap = cv2.VideoCapture(0) #select video source
+cap = cv2.VideoCapture(1) #select video source
 
 color=2 # color index for hsv values
 
