@@ -22,7 +22,7 @@ import Adafruit_BBIO.UART as UART
 showWindow=1 #0=none, 1 = only results window, 2 = all
 onComputer=1
 ratio=0.5 #note, 1 = 1:1 ratio
-blurVal=5 #should be a positive odd number
+blurVal=19 #should be a positive odd number
 morphVal=11 #should be a positive odd number
 
 gpio.cleanup()
@@ -133,10 +133,12 @@ def camHelper(color):
 	# cv2.imshow('debug',frame)
 	# now make everything not-black into white.
 	ret,frame2=cv2.threshold(frame,0,255,cv2.THRESH_BINARY)
-	# cv2.imshow('debug2',frame2)
+	cv2.imshow('debug2',frame2)
 	# find contours in the image
 	contours, hierarchy = cv2.findContours(frame2,
 		cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
+	print len(contours)
 
 	# find moments, get centroid (as long as there are contours)
 	if len(contours) > 0:
@@ -166,10 +168,10 @@ def camHelper(color):
 		# create bounding circle
 		(xcirc,ycirc),rcirc=cv2.minEnclosingCircle(cnt)
 		center = (int(xcirc),int(ycirc))
-		cv2.circle(frameOrig,center,int(rcirc),(0,0,255),2)
-		print int(angleError(xcirc,imgW))
+		#cv2.circle(frameOrig,center,int(rcirc),(0,0,255),2)
+#		print int(angleError(xcirc,imgW))
 		#create 2D error line
-		cv2.line(frameOrig,(imgW/2,imgH/2),center,(0,0,255),2)
+		#cv2.line(frameOrig,(imgW/2,imgH/2),center,(0,0,255),2)
 		camAngle=int(angleError(xcirc,imgW))
 		# print camAngle
 
@@ -323,18 +325,18 @@ while(1):
 		temp=[hL,sL,vL,hU,sU,vU]
 	else:
 		camData=camHelper(Target[focus])
-		elapsed=time()-tstart
-		if(elapsed>2):
-			#switch targets
-			if(focus==0):
-				focus=1
-				mainTarg=pinkTarg
-				# print "switch"
-			elif(focus==1):
-				focus=0
-				mainTarg=greenTarg
-				# print "switch"
-			tstart=time() #reset timer
+#		elapsed=time()-tstart
+#		if(elapsed>2):
+#			#switch targets
+#			if(focus==0):
+#				focus=1
+#				mainTarg=pinkTarg
+#				# print "switch"
+#			elif(focus==1):
+#				focus=0
+#				mainTarg=greenTarg
+#				# print "switch"
+#			tstart=time() #reset timer
 
 
 	# step 2: send data
