@@ -19,7 +19,7 @@ import serial
 import Adafruit_BBIO.UART as UART
 
 # initializations
-showWindow=1
+showWindow=0
 onComputer=1
 ratio=0.5 #note, 1 = 1:1 ratio
 blurVal=7 #should be a positive odd number
@@ -111,7 +111,7 @@ def camHelper(color):
 
 	#blur with Gauss
 	frame=cv2.GaussianBlur(frame,(blurVal,blurVal),0)
-
+	
 	# save only colors in desired range
 	# try:
 	hsv=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV) #create HSV version #need fix here...
@@ -120,9 +120,10 @@ def camHelper(color):
 	upper=np.array([hU,sU,vU])
 	frame=cv2.inRange(hsv,lower,upper) #this is the true result
 	#get from HSV to Grayscale
+
 	frameGray=cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR) #back to BGR version
 	frameGray=cv2.cvtColor(frameGray,cv2.COLOR_BGR2GRAY) #now to Grayscale
-
+	
 
 	#erode then dilate, aka open the image
 	kernel = np.ones((morphVal,morphVal),np.uint8)
@@ -130,10 +131,10 @@ def camHelper(color):
 
 	# combine and threshold
 	frame=cv2.bitwise_and(frameGray,frameGray,mask=frame)
-
+	# cv2.imshow('debug',frame)
 	# now make everything not-black into white.
 	ret,frame2=cv2.threshold(frame,0,255,cv2.THRESH_BINARY)
-
+	# cv2.imshow('debug2',frame2)
 	# find contours in the image
 	contours, hierarchy = cv2.findContours(frame2,
 		cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
@@ -162,12 +163,12 @@ def camHelper(color):
 		
 		# hide all drawing items (DO NOT DELETE)
 		# draw contours
-		cv2.drawContours(frameOrig,contours,-1,(0,255,0),1)
+		cv2.drawContours(frameOrig,contours,-1,(0,255,0),2)
 		# create bounding circle
 		(xcirc,ycirc),rcirc=cv2.minEnclosingCircle(cnt)
 		center = (int(xcirc),int(ycirc))
 		cv2.circle(frameOrig,center,int(rcirc),(0,0,255),2)
-		# print int(angleError(xcirc,imgW))
+		print int(angleError(xcirc,imgW))
 		#create 2D error line
 		cv2.line(frameOrig,(imgW/2,imgH/2),center,(0,0,255),2)
 		camAngle=int(angleError(xcirc,imgW))
@@ -178,13 +179,14 @@ def camHelper(color):
 	# 	print "ColorspaceError"
 		# camAngle=100
 
-	if(showWindow==1):
+	if(showWindow!=5):
 		try:
 			cv2.imshow('contours',frameOrig)
 		except:
 			print "VideoFrameError"
 
-	return int(camAngle)
+	# return int(camAngle)
+
 def getCamData(color):
 	# input: camera video
 	# output: avg/stdev of processed images
@@ -272,27 +274,29 @@ if(onComputer==0):
 			i=0
 
 # OPEN CV SETUP:
-orange=[7,189,90,25,255,255] # orange balloon
-pink=[17,90,114,25,255,201] #pink balloon
-green=[41,31,86,91,255,252]#green baloon
-balls=[orange,pink,green] #list of all colors
+
+greenTarg=[34,133,108,96,255,255]
+pinkTarg=[0,202,137,30,255,255]
+Target=[greenTarg,pinkTarg]
+focus=0
 temp=[0,23,72,26,255,255]
-if(showWindow==1):
-	cv2.namedWindow('contours')
-	
-cap = cv2.VideoCapture(0) #select video source
+
+cap = cv2.VideoCapture(1) #select video source
 
 color=2 # color index for hsv values
 
 
 # MAIN LOOP ###############################################
+tstart=time() #get start time
+elapsed=tstart-time()
+# print tstart
 while(1):
 
 	# objectives: 
 	# check camera, send (camera angle), receive color, <change LED's (not yet)>, repeat
 	
 	# step 1: check camera
-	camData=camHelper(temp)
+	camData=camHelper(Target[focus])
 	# print camData
 	#	if(camData[1]<10):
 	#		camData=camData[0]
@@ -303,8 +307,6 @@ while(1):
 	# step 2: send data
 	if(onComputer==0):
 		serialSendSingle(camData)
-
-
 	if(showWindow==1):
 		# controls window
 		cv2.imshow('image',img)
@@ -332,6 +334,22 @@ while(1):
 		cv2.rectangle(img,tL2,bR2,(b_U,g_U,r_U),-1)    #plot rect2
 		temp=[hL,sL,vL,hU,sU,vU]
 
+
+
+
+	# debug to ensure can switch easily between targets
+	elapsed=time()-tstart
+	if(elapsed>2):
+		#switch targets
+		if(focus==0):
+			focus=1
+			mainTarg=pinkTarg
+			# print "switch"
+		elif(focus==1):
+			focus=0
+			mainTarg=greenTarg
+			# print "switch"
+		tstart=time() #reset timer
 
 
 
